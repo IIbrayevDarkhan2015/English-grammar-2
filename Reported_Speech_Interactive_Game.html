@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reported Speech — Interactive Grammar Game</title>
+<style>
+:root{--navy:#183153;--blue:#2864b4;--pale:#eef5ff;--gold:#ffd166;--green:#18845b;--red:#c43d4d;--ink:#203047;--muted:#65758b;--line:#dce5f0}
+*{box-sizing:border-box}body{margin:0;background:#f4f7fb;color:var(--ink);font:16px/1.55 Arial,sans-serif}
+header{background:linear-gradient(120deg,#183153,#2864b4);color:white;padding:28px 18px;text-align:center}
+header h1{margin:0 0 6px;font-size:clamp(25px,4vw,38px)}header p{margin:0;color:#e2edff}
+.wrap{max-width:1050px;margin:22px auto;padding:0 14px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.tabs button,.btn{border:0;border-radius:10px;padding:11px 15px;background:var(--blue);color:white;font-weight:700;cursor:pointer}
+.tabs button{background:#dce8f8;color:var(--navy)}.tabs button.active{background:var(--navy);color:white}
+.panel{display:none;background:white;border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:0 5px 18px #1831530c;margin-bottom:18px}
+.panel.active{display:block}h2{color:var(--navy);margin-top:0}h3{color:#244b7e;margin-bottom:7px}
+.rule{background:var(--pale);border-left:4px solid var(--blue);padding:13px 15px;border-radius:8px;margin:12px 0}
+.ru{color:#53647a;margin-top:4px}.en{font-weight:600}.formula{font-family:Georgia,serif;font-size:18px;font-weight:bold;color:#174a8c}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:15px}th,td{border:1px solid var(--line);padding:10px;text-align:left;vertical-align:top}th{background:#eaf1fb;color:var(--navy)}
+.card{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0}.muted{color:var(--muted)}
+.question{font-size:18px;font-weight:700;margin:12px 0}.options{display:grid;gap:9px;margin:12px 0}
+.option{border:1px solid #cbd8e8;background:white;padding:12px;border-radius:10px;text-align:left;cursor:pointer;color:var(--ink)}
+.option:hover{border-color:var(--blue);background:#f4f8ff}.option:disabled{cursor:default;opacity:1}
+.feedback{padding:11px 13px;border-radius:9px;margin-top:12px;display:none}.correct{display:block;background:#e8f7ef;color:#126342}.wrong{display:block;background:#fff0f1;color:#9e2938}
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}.secondary{background:#64748b}.score{font-weight:bold;color:var(--navy)}
+select{padding:10px;border:1px solid var(--line);border-radius:8px;max-width:100%}
+.progress{height:9px;background:#e5edf7;border-radius:9px;overflow:hidden;margin:12px 0}.bar{height:100%;width:0;background:#20a276;transition:width .25s}
+.match-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:center;padding:10px;border-bottom:1px solid var(--line)}
+.match-row select{width:100%}.small{font-size:14px}.pill{display:inline-block;background:#fff1c9;color:#725000;border-radius:30px;padding:4px 9px;font-size:12px;font-weight:bold}
+footer{text-align:center;color:var(--muted);padding:20px}
+@media(max-width:650px){.panel{padding:16px}.match-row{grid-template-columns:1fr}table{font-size:13px}th,td{padding:7px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>REPORTED SPEECH</h1>
+  <p>Learn the rules • Изучи правила • Practise • Проверь себя</p>
+</header>
+<div class="wrap">
+  <div class="tabs" role="tablist">
+    <button class="active" data-tab="learn">1. Learn / Правила</button>
+    <button data-tab="matching">2. Matching / Соедини</button>
+    <button data-tab="translation">3. Translation / Перевод</button>
+    <button data-tab="build">4. Transform / Преобразуй</button>
+    <button data-tab="test">5. Final game / Тест</button>
+  </div>
+
+  <section id="learn" class="panel active">
+    <h2>What is Reported Speech? / Что такое косвенная речь?</h2>
+    <div class="rule"><div class="en">Reported Speech is used to tell someone what another person said, without repeating the exact words.</div><div class="ru">Косвенная речь используется, чтобы передать кому-либо слова другого человека, не повторяя их дословно.</div></div>
+    <div class="card"><b>Direct Speech / Прямая речь:</b> Tom said, “I am tired.”<br><b>Reported Speech / Косвенная речь:</b> Tom said (that) he was tired.<div class="ru">Том сказал: «Я устал». → Том сказал, что он устал.</div></div>
+
+    <h3>Rule 1. Statements / Утвердительные предложения</h3>
+    <div class="rule"><div class="formula">Subject + said (that) + subject + verb</div><div class="ru">Подлежащее + said (что) + подлежащее + глагол. Союз <b>that</b> можно использовать или опустить.</div></div>
+    <p><b>Example:</b> Anna said, “I like music.” → Anna said (that) she liked music.</p><p class="ru">Анна сказала: «Я люблю музыку». → Анна сказала, что любит музыку.</p>
+
+    <h3>Rule 2. Backshift of tenses / Сдвиг времён назад</h3>
+    <div class="rule"><div class="en">When the reporting verb (said/told) is in the past, the tense usually moves one step back.</div><div class="ru">Если глагол сообщения (said/told) стоит в прошедшем времени, время в передаваемом высказывании обычно сдвигается на один шаг назад.</div></div>
+    <table><tr><th>Direct Speech / Прямая речь</th><th>Reported Speech / Косвенная речь</th><th>Example / Пример</th></tr>
+    <tr><td>Present Simple</td><td>Past Simple</td><td>“I work.” → He said he <b>worked</b>.</td></tr>
+    <tr><td>Present Continuous</td><td>Past Continuous</td><td>“I am working.” → He said he <b>was working</b>.</td></tr>
+    <tr><td>Present Perfect</td><td>Past Perfect</td><td>“I have finished.” → He said he <b>had finished</b>.</td></tr>
+    <tr><td>Past Simple</td><td>Past Perfect</td><td>“I saw it.” → He said he <b>had seen</b> it.</td></tr>
+    <tr><td>Past Continuous</td><td>Past Perfect Continuous (often)</td><td>“I was reading.” → He said he <b>had been reading</b>.</td></tr>
+    <tr><td>will</td><td>would</td><td>“I will help.” → He said he <b>would</b> help.</td></tr>
+    <tr><td>can</td><td>could</td><td>“I can swim.” → He said he <b>could</b> swim.</td></tr>
+    <tr><td>may</td><td>might</td><td>“I may come.” → He said he <b>might</b> come.</td></tr>
+    <tr><td>must</td><td>had to (obligation)</td><td>“I must go.” → He said he <b>had to</b> go.</td></tr></table>
+    <p class="small muted">Note: Past Perfect usually stays Past Perfect. Some modal verbs (should, would, could, might) do not change.</p>
+    <p class="ru small">Примечание: Past Perfect обычно не меняется. Модальные глаголы should, would, could, might чаще всего сохраняют форму.</p>
+
+    <h3>Rule 3. Pronouns / Местоимения</h3>
+    <div class="rule"><div class="en">Change pronouns according to who is speaking and who is listening.</div><div class="ru">Местоимения меняются в зависимости от того, кто говорит и к кому обращаются.</div></div>
+    <p>“I love my car,” John said. → John said <b>he</b> loved <b>his</b> car.</p><p class="ru">«Я люблю свою машину», — сказал Джон. → Джон сказал, что он любит свою машину.</p>
+
+    <h3>Rule 4. Time and place words / Слова времени и места</h3>
+    <table><tr><th>Direct / Прямая речь</th><th>Reported / Косвенная речь</th><th>Перевод</th></tr>
+    <tr><td>now</td><td>then</td><td>сейчас → тогда</td></tr><tr><td>today</td><td>that day</td><td>сегодня → в тот день</td></tr>
+    <tr><td>yesterday</td><td>the day before</td><td>вчера → накануне</td></tr><tr><td>tomorrow</td><td>the next/following day</td><td>завтра → на следующий день</td></tr>
+    <tr><td>this</td><td>that</td><td>этот → тот</td></tr><tr><td>these</td><td>those</td><td>эти → те</td></tr>
+    <tr><td>here</td><td>there</td><td>здесь → там</td></tr><tr><td>last week</td><td>the week before</td><td>на прошлой неделе → неделей ранее</td></tr>
+    <tr><td>next week</td><td>the following week</td><td>на следующей неделе → на следующей неделе (относительно того момента)</td></tr></table>
+    <p class="small muted">These changes are common, but not automatic: if the place/time is still the same or the information is still true, the original word may remain.</p>
+    <p class="ru small">Эти изменения типичны, но не обязательны во всех ситуациях: если место/время не изменилось или информация всё ещё актуальна, исходное слово можно сохранить.</p>
+
+    <h3>Rule 5. Say and tell / Глаголы say и tell</h3>
+    <div class="card"><b>say + (that) + sentence</b> — He said (that) he was busy.<div class="ru">say + (that) + предложение. После say не указываем человека без предлога to.</div><br><b>tell + person + (that) + sentence</b> — He told me (that) he was busy.<div class="ru">tell + кому? + (that) + предложение. После tell обязательно указываем, кому сказали.</div></div>
+
+    <h3>Rule 6. Questions / Вопросы</h3>
+    <div class="rule"><div class="formula">asked + if/whether + subject + verb</div><div class="ru">Для вопросов с ответом «да/нет»: asked + if/whether + подлежащее + сказуемое. Прямой порядок слов, без do/does/did.</div></div>
+    <p>“Are you ready?” → She asked <b>if I was</b> ready.</p><p class="ru">«Ты готов?» → Она спросила, готов ли я.</p>
+    <div class="rule"><div class="formula">asked + question word + subject + verb</div><div class="ru">Для специальных вопросов сохраняем вопросительное слово (where, why, when, what, how), но используем прямой порядок слов.</div></div>
+    <p>“Where do you live?” → He asked me <b>where I lived</b>.</p><p class="ru">«Где ты живёшь?» → Он спросил меня, где я живу.</p>
+
+    <h3>Rule 7. Commands and requests / Приказы и просьбы</h3>
+    <div class="rule"><div class="formula">told/asked + person + (not) to + verb</div><div class="ru">Для приказов и просьб: told/asked + кому + (not) to + начальная форма глагола.</div></div>
+    <p>“Close the door.” → The teacher told us <b>to close</b> the door.</p><p class="ru">«Закройте дверь». → Учитель сказал нам закрыть дверь.</p>
+    <p>“Don’t touch it.” → Mum told me <b>not to touch</b> it.</p><p class="ru">«Не трогай это». → Мама сказала мне не трогать это.</p>
+
+    <h3>When do we NOT change the tense? / Когда время НЕ меняется?</h3>
+    <div class="rule"><div class="en">The tense may stay the same when the reporting verb is in the present, or when we report a general truth or a fact that is still true.</div><div class="ru">Время может не меняться, если глагол сообщения стоит в настоящем времени или если передаётся общеизвестный факт либо информация, которая остаётся верной.</div></div>
+    <p>“Water boils at 100°C.” → The teacher said that water <b>boils</b> at 100°C.</p><p class="ru">Учитель сказал, что вода кипит при 100°C.</p>
+  </section>
+
+  <section id="matching" class="panel">
+    <h2>Matching: Formula and Rule / Соедини формулу и правило</h2>
+    <p>Choose the correct rule for each formula. / Выбери правильное правило для каждой формулы.</p>
+    <div id="matchArea"></div>
+    <div class="controls"><button class="btn" id="checkMatch">Check answers / Проверить</button><button class="btn secondary" id="resetMatch">Reset / Сбросить</button></div>
+    <div id="matchFeedback" class="feedback"></div>
+  </section>
+
+  <section id="translation" class="panel">
+    <h2>Choose the correct translation / Выбери правильный перевод</h2>
+    <p>Read the English sentence and select its correct Russian translation. / Прочитай предложение на английском и выбери правильный перевод на русский.</p>
+    <div class="progress"><div class="bar" id="transBar"></div></div>
+    <div class="score" id="transScore">Question 1 / 10</div>
+    <div class="question" id="transQuestion"></div><div class="options" id="transOptions"></div><div class="feedback" id="transFeedback"></div>
+    <div class="controls"><button class="btn" id="transNext" disabled>Next / Далее</button><button class="btn secondary" id="transRestart">Start again / Начать заново</button></div>
+  </section>
+
+  <section id="build" class="panel">
+    <h2>Transform the sentence / Преобразуй предложение</h2>
+    <p>Choose the correct Reported Speech version. Pay attention to tense, pronouns and word order. / Выбери правильный вариант косвенной речи. Обрати внимание на время, местоимения и порядок слов.</p>
+    <div class="progress"><div class="bar" id="buildBar"></div></div>
+    <div class="score" id="buildScore">Question 1 / 8</div>
+    <div class="question" id="buildQuestion"></div><div class="options" id="buildOptions"></div><div class="feedback" id="buildFeedback"></div>
+    <div class="controls"><button class="btn" id="buildNext" disabled>Next / Далее</button><button class="btn secondary" id="buildRestart">Start again / Начать заново</button></div>
+  </section>
+
+  <section id="test" class="panel">
+    <h2>Final game: Grammar challenge / Итоговая игра</h2>
+    <p>10 mixed questions. Get feedback after every answer. / 10 заданий разных типов. После каждого ответа ты получишь объяснение.</p>
+    <div class="progress"><div class="bar" id="testBar"></div></div>
+    <div class="score" id="testScore">Question 1 / 10</div>
+    <div class="question" id="testQuestion"></div><div class="options" id="testOptions"></div><div class="feedback" id="testFeedback"></div>
+    <div class="controls"><button class="btn" id="testNext" disabled>Next / Далее</button><button class="btn secondary" id="testRestart">Restart / Повторить</button></div>
+  </section>
+</div>
+<footer>Grammar practice • Reported Speech • English with Russian explanations</footer>
+<script>
+const tabs=[...document.querySelectorAll('.tabs button')];
+tabs.forEach(b=>b.addEventListener('click',()=>{tabs.forEach(x=>x.classList.remove('active'));document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.getElementById(b.dataset.tab).classList.add('active')}));
+const matchItems=[
+ ["Subject + said (that) + subject + verb","Утверждение: передаём чьи-либо слова; that можно опустить."],
+ ["asked + if/whether + subject + verb","Общий вопрос: используем if/whether и прямой порядок слов."],
+ ["asked + question word + subject + verb","Специальный вопрос: сохраняем вопросительное слово и прямой порядок слов."],
+ ["told/asked + person + to + verb","Приказ или просьба: указываем человека и используем to + глагол."],
+ ["told/asked + person + not to + verb","Запрет или отрицательная просьба: используем not to + глагол."],
+ ["tell + person / say + (to person)","Tell требует дополнение-адресата; say обычно используется без него или с to."]
+];
+const matchArea=document.getElementById('matchArea');
+function renderMatch(){matchArea.innerHTML='';matchItems.forEach((it,i)=>{let row=document.createElement('div');row.className='match-row';let left=document.createElement('div');left.innerHTML='<b>'+(i+1)+'. '+it[0]+'</b>';let sel=document.createElement('select');sel.dataset.answer=i;sel.innerHTML='<option value="">— Choose a rule / Выбери правило —</option>'+matchItems.map((x,j)=>({x,j})).sort((a,b)=>((a.j*3+2)%6)-((b.j*3+2)%6)).map(o=>`<option value="${o.j}">${String.fromCharCode(65+o.j)}. ${o.x[1]}</option>`).join('');row.append(left,sel);matchArea.append(row)})}
+renderMatch();
+document.getElementById('checkMatch').onclick=()=>{let sels=[...matchArea.querySelectorAll('select')],n=sels.filter(s=>s.value!=='').length;if(n<matchItems.length){showMatch('Complete all six matches first. / Сначала ответь на все 6 вопросов.',false);return}let score=sels.filter(s=>+s.value===+s.dataset.answer).length;showMatch(`Your score: ${score}/6. ${score===6?'Excellent! Отлично!':'Review the rules and try again. Повтори правила и попробуй ещё раз.'}`,score===6)};
+function showMatch(t,ok){let e=document.getElementById('matchFeedback');e.className='feedback '+(ok?'correct':'wrong');e.textContent=t}
+document.getElementById('resetMatch').onclick=()=>{renderMatch();let e=document.getElementById('matchFeedback');e.className='feedback';e.textContent=''};
+const translationQs=[
+{q:'Mark said, “I am busy now.” Mark said that he was busy then.',opts:['Марк сказал, что сейчас он занят.','Марк сказал, что тогда он был занят.','Марк спросил, был ли он занят.'],a:1,why:'am → was; now → then. «Сейчас» меняется на «тогда», а Present Simple/Continuous здесь сдвигается назад.'},
+{q:'Lisa said, “I will call you tomorrow.”',opts:['Лиза сказала, что позвонит мне на следующий день.','Лиза сказала, что позвонила вчера.','Лиза спросила, позвоню ли я завтра.'],a:0,why:'will → would; tomorrow → the next day. Лиза сказала, что позвонит мне на следующий день.'},
+{q:'He said, “I have lost my keys.”',opts:['Он сказал, что теряет свои ключи.','Он сказал, что потерял свои ключи.','Он спросил, где его ключи.'],a:1,why:'Present Perfect → Past Perfect: have lost → had lost. Перевод: Он сказал, что потерял свои ключи.'},
+{q:'She asked me, “Do you like football?”',opts:['Она спросила меня, люблю ли я футбол.','Она сказала мне играть в футбол.','Она спросила меня, где футбол.'],a:0,why:'Общий вопрос передаётся через asked if/whether + прямой порядок слов: if I liked football.'},
+{q:'Tom asked, “Where does your brother work?”',opts:['Том спросил, где работает мой брат.','Том спросил, работает ли мой брат.','Том сказал, что его брат работает здесь.'],a:0,why:'Where сохраняется, does исчезает, порядок слов становится прямым: where my brother worked.'},
+{q:'The teacher told us, “Open your books.”',opts:['Учитель спросил нас, открыли ли мы книги.','Учитель сказал нам открыть книги.','Учитель сказал, что книги открыты.'],a:1,why:'Приказ: told + person + to + verb. told us to open — сказал нам открыть.'},
+{q:'Mum said, “Don’t touch the hot pan.”',opts:['Мама сказала не трогать горячую сковороду.','Мама спросила, горячая ли сковорода.','Мама сказала, что трогала сковороду.'],a:0,why:'Отрицательный приказ: told me not to touch — сказала мне не трогать.'},
+{q:'Jack said, “I can repair this engine.”',opts:['Джек сказал, что мог отремонтировать этот двигатель.','Джек спросил, кто ремонтирует двигатель.','Джек сказал, что ремонтирует тот двигатель сейчас.'],a:0,why:'can → could; this → that. Джек сказал, что мог отремонтировать тот двигатель.'},
+{q:'The instructor said, “Water boils at 100°C.”',opts:['Инструктор сказал, что вода кипела вчера.','Инструктор сказал, что вода кипит при 100°C.','Инструктор спросил, кипит ли вода.'],a:1,why:'Общеизвестный факт: время можно не менять. Water boils — вода кипит.'},
+{q:'Anna said, “I saw this car yesterday.”',opts:['Анна сказала, что видела эту машину завтра.','Анна сказала, что видела ту машину накануне.','Анна спросила, видела ли я машину.'],a:1,why:'Past Simple → Past Perfect; this → that; yesterday → the day before.'}
+];
+const buildQs=[
+{q:'Direct: Peter said, “I play tennis.”',opts:['Peter said that he played tennis.','Peter said that I play tennis.','Peter told that he plays tennis.'],a:0,why:'Present Simple → Past Simple; I → he. Peter said that he played tennis.'},
+{q:'Direct: Mary said, “I am studying English.”',opts:['Mary said she is study English.','Mary said she was studying English.','Mary said she had studied English.'],a:1,why:'Present Continuous → Past Continuous: am studying → was studying.'},
+{q:'Direct: They said, “We have finished the work.”',opts:['They said they finished the work.','They said they had finished the work.','They said we have finish the work.'],a:1,why:'Present Perfect → Past Perfect: have finished → had finished; we → they.'},
+{q:'Direct: He said, “I will help you.”',opts:['He said he would help me.','He said he will helped me.','He told he would help.'],a:0,why:'will → would; I → he; you changes according to the listener. Say does not take a person directly.'},
+{q:'Direct: “Are you a mechanic?” she asked me.',opts:['She asked me was I a mechanic.','She asked me if I was a mechanic.','She told me if I am a mechanic.'],a:1,why:'Yes/No question: asked + if + subject + verb. No inversion: I was, not was I.'},
+{q:'Direct: “Why are you late?” the teacher asked.',opts:['The teacher asked why was I late.','The teacher asked why I was late.','The teacher asked that why I am late.'],a:1,why:'Keep why, use statement word order: why + I + was.'},
+{q:'Direct: “Don’t run!” the coach told us.',opts:['The coach told us don’t run.','The coach told us not to run.','The coach said us not run.'],a:1,why:'Negative command: told + person + not to + infinitive.'},
+{q:'Direct: “I must finish it today,” Ben said.',opts:['Ben said he must finished it that day.','Ben said he had to finish it that day.','Ben said I had to finish it tomorrow.'],a:1,why:'must (obligation) → had to; today → that day; I → he.'}
+];
+const testQs=[
+{q:'Choose the correct formula for a statement.',opts:['said (that) + subject + verb','asked if + verb + subject','told + person + verb-ing'],a:0,why:'A statement uses said (that) + subject + verb. Утверждение: said (that) + подлежащее + сказуемое.'},
+{q:'“I am hungry,” Sam said. Choose the correct version.',opts:['Sam said he is hungry.','Sam said he was hungry.','Sam told he was hungry.'],a:1,why:'am → was; I → he. После told нужен адресат: told me/us.'},
+{q:'Which word usually replaces “yesterday”?',opts:['tomorrow','the next day','the day before'],a:2,why:'yesterday → the day before (вчера → накануне).'},
+{q:'“Can you drive?” He asked me …',opts:['can I drive','if I could drive','that I could drive'],a:1,why:'can → could; yes/no question → if + subject + verb.'},
+{q:'“Where do you work?” She asked me …',opts:['where did I work','where I worked','if where I worked'],a:1,why:'Question word + subject + verb. do исчезает; порядок слов прямой.'},
+{q:'Choose the correct negative command.',opts:['asked him don’t touch','told him not to touch','said him not touch'],a:1,why:'told + person + not to + verb.'},
+{q:'“We will come next week,” they said.',opts:['They said they would come the following week.','They said we will come next week.','They told would come next week.'],a:0,why:'will → would; we → they; next week → the following week.'},
+{q:'Which verb needs a person after it?',opts:['say','tell','both always'],a:1,why:'Tell is followed by a person: tell me, tell us. Say is used without a person or with to.'},
+{q:'“The Earth goes around the Sun,” the teacher said.',opts:['The teacher said the Earth went around the Sun.','The teacher said the Earth goes around the Sun.','The teacher asked if Earth goes around Sun.'],a:1,why:'A general truth can remain in the Present Simple.'},
+{q:'“Please help me,” she said to Tom.',opts:['She asked Tom to help her.','She told Tom help me.','She asked if Tom helped her.'],a:0,why:'A request: asked + person + to + verb. «Она попросила Тома помочь ей».'}
+];
+function quiz(prefix,data){let idx=0,score=0,answered=false;const $=id=>document.getElementById(prefix+id);function draw(){answered=false;$('Question').textContent=data[idx].q;$('Score').textContent=`Question ${idx+1} / ${data.length}   |   Score: ${score}`;$('Bar').style.width=(idx/data.length*100)+'%';$('Feedback').className='feedback';$('Feedback').textContent='';$('Options').innerHTML='';data[idx].opts.forEach((o,i)=>{let b=document.createElement('button');b.className='option';b.textContent=String.fromCharCode(65+i)+'. '+o;b.onclick=()=>choose(i);$('Options').append(b)});$('Next').disabled=true;$('Next').textContent=idx===data.length-1?'See result / Результат':'Next / Далее'}function choose(i){if(answered)return;answered=true;let ok=i===data[idx].a;if(ok)score++;[...$('Options').children].forEach((b,j)=>{b.disabled=true;if(j===data[idx].a)b.style.borderColor='#18845b';if(j===i&&!ok)b.style.borderColor='#c43d4d'});$('Feedback').className='feedback '+(ok?'correct':'wrong');$('Feedback').innerHTML=(ok?'Correct! Верно! ':'Not quite. Неверно. ')+data[idx].why;$('Score').textContent=`Question ${idx+1} / ${data.length}   |   Score: ${score}`;$('Next').disabled=false}function next(){if(!answered)return;if(idx<data.length-1){idx++;draw()}else{$('Question').textContent=`You scored ${score} out of ${data.length}!`;let msg=score>=9?'Excellent! You understand Reported Speech very well. Отлично!':score>=7?'Good work! Review the rules you found difficult. Хорошая работа!':'Keep practising. Read the explanations and try again. Повтори правила и попробуй ещё раз.';$('Options').innerHTML='';$('Feedback').className='feedback '+(score>=7?'correct':'wrong');$('Feedback').textContent=msg;$('Bar').style.width='100%';$('Next').disabled=true;$('Next').textContent='Completed / Завершено';$('Score').textContent=`Final score: ${score}/${data.length}`}}function restart(){idx=0;score=0;draw()}$('Next').onclick=next;$('Restart').onclick=restart;draw()}
+</script>
+<script>
+// Initialise each independent exercise.
+function startQuiz(prefix,data){
+ let idx=0,score=0,answered=false;
+ const el=s=>document.getElementById(prefix+s);
+ function render(){
+  answered=false;el('Question').textContent=data[idx].q;
+  el('Score').textContent=`Question ${idx+1} / ${data.length}  |  Score: ${score}`;
+  el('Bar').style.width=(idx/data.length*100)+'%';
+  el('Feedback').className='feedback';el('Feedback').textContent='';
+  el('Options').innerHTML='';
+  data[idx].opts.forEach((o,i)=>{const b=document.createElement('button');b.className='option';b.textContent=String.fromCharCode(65+i)+'. '+o;b.onclick=()=>answer(i);el('Options').append(b)});
+  el('Next').disabled=true;el('Next').textContent=idx===data.length-1?'See result / Результат':'Next / Далее';
+ }
+ function answer(i){
+  if(answered)return;answered=true;const ok=i===data[idx].a;if(ok)score++;
+  [...el('Options').children].forEach((b,j)=>{b.disabled=true;if(j===data[idx].a)b.style.borderColor='#18845b';if(j===i&&!ok)b.style.borderColor='#c43d4d'});
+  el('Feedback').className='feedback '+(ok?'correct':'wrong');
+  el('Feedback').textContent=(ok?'Correct! Верно! ':'Try again next time. Разбери объяснение. ')+data[idx].why;
+  el('Score').textContent=`Question ${idx+1} / ${data.length}  |  Score: ${score}`;el('Next').disabled=false;
+ }
+ function next(){
+  if(!answered)return;
+  if(idx<data.length-1){idx++;render();return}
+  el('Question').textContent=`Your result: ${score}/${data.length}`;
+  el('Options').innerHTML='';el('Feedback').className='feedback '+(score>=7?'correct':'wrong');
+  el('Feedback').textContent=score>=9?'Excellent! Отличный результат!':score>=7?'Good job! Повтори ошибки для закрепления.':'Review the lesson and try again. Вернись к правилам и повтори тест.';
+  el('Bar').style.width='100%';el('Next').disabled=true;el('Next').textContent='Completed / Завершено';el('Score').textContent=`Final score: ${score}/${data.length}`;
+ }
+ function restart(){idx=0;score=0;render()}
+ el('Next').onclick=next;el('Restart').onclick=restart;render();
+}
+startQuiz('trans',translationQs);
+startQuiz('build',buildQs);
+startQuiz('test',testQs);
+</script>
+</body>
+</html>

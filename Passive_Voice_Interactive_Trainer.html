@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Passive Voice — Interactive Grammar Trainer</title>
+<style>
+:root{--navy:#173454;--blue:#2563eb;--teal:#0f766e;--green:#15803d;--red:#b42318;--bg:#f3f6fb;--line:#dbe3ef;--muted:#5b6575}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#172033;font:16px/1.55 Arial, sans-serif}
+header{background:linear-gradient(120deg,#142b4a,#27618f);color:white;padding:30px 18px}.wrap{max-width:1050px;margin:auto;padding:0 16px}
+h1{font-size:clamp(26px,4vw,38px);margin:0 0 8px}header p{margin:0;color:#e5eefb}
+nav{position:sticky;top:0;z-index:5;display:flex;gap:8px;overflow-x:auto;background:white;border-bottom:1px solid var(--line);padding:10px max(16px,calc((100% - 1050px)/2))}
+nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:bold;background:#edf3fb;padding:8px 11px;border-radius:20px;font-size:14px}
+main{max-width:1050px;margin:22px auto;padding:0 16px}.panel{background:white;border:1px solid var(--line);border-radius:16px;padding:22px;margin:18px 0;box-shadow:0 5px 18px #17345a0b}
+h2{color:var(--navy);margin:0 0 14px;font-size:25px}h3{color:#24496e;margin:18px 0 8px}.lead{font-size:17px}.translation{color:#475569;margin-top:5px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:14px}.rule{background:#f7faff;border:1px solid #dce8f7;border-radius:12px;padding:15px}
+.formula{font-size:18px;font-weight:bold;color:#124b85;background:#eaf2ff;padding:10px;border-radius:8px;margin:8px 0}
+.example{border-left:4px solid #2aa198;padding:8px 12px;background:#f1fbfa;margin:8px 0;border-radius:0 8px 8px 0}
+.tip{background:#fff8e8;border-left:4px solid #e5a000;padding:12px;border-radius:8px;margin:12px 0}
+.badge{display:inline-block;background:#e7f1ff;color:#164a82;padding:4px 9px;border-radius:20px;font-size:13px;font-weight:bold}
+button{border:0;border-radius:9px;padding:10px 15px;background:var(--blue);color:white;font-weight:bold;cursor:pointer;font-size:15px}button:hover{filter:brightness(.94)}button.secondary{background:#e8eef7;color:#193654}
+.task{padding:14px 0;border-bottom:1px solid var(--line)}.task:last-child{border:0}.task p{margin:4px 0 8px}
+input[type=text],select{width:100%;padding:10px;border:1px solid #b9c7d8;border-radius:8px;font:inherit;background:white}
+.options{display:grid;gap:7px;margin:8px 0}.options label{display:block;padding:8px 10px;border:1px solid var(--line);border-radius:8px;cursor:pointer}.options label:hover{background:#f4f8ff}
+.feedback{margin-top:7px;font-weight:bold;font-size:14px}.correct{color:var(--green)}.wrong{color:var(--red)}.score{font-weight:bold;color:var(--navy);margin:10px 0}
+.matchrow{display:grid;grid-template-columns:1fr 1.2fr;gap:12px;align-items:center;margin:10px 0}.matchrow .formula{margin:0;font-size:15px}
+.progress{height:9px;background:#e5eaf1;border-radius:10px;overflow:hidden;margin:12px 0}.progress>div{height:100%;background:#159887;width:0%;transition:.3s}
+footer{text-align:center;color:var(--muted);padding:25px}
+@media(max-width:600px){.panel{padding:16px}.matchrow{grid-template-columns:1fr}.formula{font-size:16px}}
+</style></head>
+<body>
+<header><div class="wrap"><span class="badge">INTERACTIVE GRAMMAR TRAINER</span>
+<h1>PASSIVE VOICE</h1><p>Подробная теория на английском с переводом на русский • 5 видов практики • автоматическая проверка</p></div></header>
+<nav><a href="#theory">Theory</a><a href="#order">Word order</a><a href="#gaps">Gap filling</a><a href="#matching">Matching</a><a href="#translation">Translation</a><a href="#forms">Choose form</a><a href="#final">Final test</a></nav>
+<main>
+<section class="panel" id="theory">
+<h2>1. THEORY — Что такое Passive Voice?</h2>
+<p class="lead"><b>We use the Passive Voice when the action is more important than the person who does it, or when the person who does the action is unknown or unimportant.</b></p>
+<p class="translation"><b>Страдательный залог (Passive Voice)</b> используется, когда важнее само действие или его результат, а не тот, кто его выполняет. Также Passive Voice употребляется, если исполнитель неизвестен или неважен.</p>
+<div class="example"><b>Active:</b> The mechanic repairs the car. — Механик ремонтирует машину.<br><b>Passive:</b> The car is repaired by the mechanic. — Машина ремонтируется механиком.</div>
+<div class="tip"><b>Главная формула / Main formula</b><div class="formula">Subject + be (in the correct tense) + V3</div>Подлежащее + глагол be в нужном времени + третья форма смыслового глагола (Past Participle / V3).</div>
+<h3>How to form the Passive Voice — Как образуется Passive Voice</h3>
+<div class="grid">
+<div class="rule"><b>Present Simple Passive</b><div class="formula">am / is / are + V3</div><p>English: We use it for facts, routines and regular actions.</p><p class="translation">Русский: Используется для фактов, привычных и регулярно повторяющихся действий.</p><div class="example">Cars are produced in this factory.<br>Автомобили производятся на этой фабрике.</div></div>
+<div class="rule"><b>Past Simple Passive</b><div class="formula">was / were + V3</div><p>English: We use it for completed actions in the past.</p><p class="translation">Русский: Используется для завершённых действий в прошлом.</p><div class="example">The engine was repaired yesterday.<br>Двигатель отремонтировали вчера.</div></div>
+<div class="rule"><b>Future Simple Passive</b><div class="formula">will be + V3</div><p>English: We use it for actions that will happen in the future.</p><p class="translation">Русский: Используется для действий, которые произойдут в будущем.</p><div class="example">The results will be announced tomorrow.<br>Результаты объявят завтра.</div></div>
+<div class="rule"><b>Present Continuous Passive</b><div class="formula">am / is / are + being + V3</div><p>English: We use it for an action happening now.</p><p class="translation">Русский: Используется для действия, которое происходит в данный момент.</p><div class="example">The road is being repaired now.<br>Дорогу сейчас ремонтируют.</div></div>
+<div class="rule"><b>Past Continuous Passive</b><div class="formula">was / were + being + V3</div><p>English: We use it for an action in progress at a particular time in the past.</p><p class="translation">Русский: Используется для действия, которое было в процессе в определённый момент прошлого.</p><div class="example">The car was being washed at 5 p.m.<br>Машину мыли в пять часов вечера.</div></div>
+<div class="rule"><b>Present Perfect Passive</b><div class="formula">has / have + been + V3</div><p>English: We use it for a completed action with a result connected to the present.</p><p class="translation">Русский: Используется для завершённого действия, результат которого важен сейчас.</p><div class="example">The work has been finished.<br>Работа завершена.</div></div>
+<div class="rule"><b>Past Perfect Passive</b><div class="formula">had + been + V3</div><p>English: We use it for an action completed before another past action.</p><p class="translation">Русский: Используется для действия, завершившегося до другого действия в прошлом.</p><div class="example">The room had been cleaned before we arrived.<br>Комнату убрали до нашего прихода.</div></div>
+<div class="rule"><b>Modal verbs Passive</b><div class="formula">modal + be + V3</div><p>English: We use it with can, must, should, may, have to, etc.</p><p class="translation">Русский: Используется с модальными глаголами can, must, should, may, have to и другими.</p><div class="example">Safety rules must be followed.<br>Правила безопасности должны соблюдаться.</div></div>
+</div>
+<h3>Negative and questions — Отрицания и вопросы</h3>
+<div class="grid">
+<div class="rule"><b>Negative / Отрицание</b><div class="formula">be + not + V3</div><p>The car isn't repaired every day. — Машину не ремонтируют каждый день.</p><p>The parts weren't delivered. — Детали не были доставлены.</p></div>
+<div class="rule"><b>Question / Вопрос</b><div class="formula">Be + subject + V3?</div><p>Is English spoken here? — Здесь говорят по-английски?</p><p>Was the window broken? — Окно было разбито?</p></div>
+</div>
+<h3>How to change Active into Passive — Как преобразовать Active в Passive</h3>
+<div class="rule"><ol><li>Find the object in the Active sentence. — Найдите дополнение.</li><li>Put it at the beginning as the new subject. — Поставьте его в начало предложения.</li><li>Choose the correct form of <b>be</b> according to the tense. — Выберите форму be в соответствии со временем.</li><li>Use the main verb in V3. — Используйте третью форму основного глагола.</li><li>Add <b>by + doer</b> only if the person is important. — Добавьте by + исполнитель, только если он важен.</li></ol>
+<div class="example">Active: Workers build houses.<br>Passive: Houses are built (by workers).<br>Рабочие строят дома. → Дома строятся (рабочими).</div></div>
+<div class="tip"><b>Remember! / Запомните!</b><br>Only transitive verbs (verbs that have an object) are normally used in the Passive Voice. The main verb is always in V3. The tense is shown by the form of <b>be</b>.</div>
+</section>
+
+<section class="panel" id="order"><h2>2. WORD ORDER — Расставьте слова в правильном порядке</h2><p>Составьте 10 предложений в Passive Voice. Введите полное предложение.</p><div id="orderTasks"></div><button onclick="checkOrder()">Check answers / Проверить</button> <button class="secondary" onclick="resetOrder()">Reset</button><div id="orderScore" class="score"></div></section>
+<section class="panel" id="gaps"><h2>3. GAP FILLING — Вставьте пропущенную форму глагола</h2><p>Выберите правильный вариант.</p><div id="gapTasks"></div><button onclick="checkRadios('gaps')">Check answers / Проверить</button> <button class="secondary" onclick="resetRadios('gaps')">Reset</button><div id="gapsScore" class="score"></div></section>
+<section class="panel" id="matching"><h2>4. MATCHING — Соедините формулу и правило</h2><p>Подберите к каждой формуле правильное объяснение.</p><div id="matchTasks"></div><button onclick="checkMatching()">Check answers / Проверить</button> <button class="secondary" onclick="buildMatching()">Reset</button><div id="matchScore" class="score"></div></section>
+<section class="panel" id="translation"><h2>5. CHOOSE THE CORRECT TRANSLATION — Выберите правильный перевод</h2><p>Выберите точный перевод английского предложения.</p><div id="translationTasks"></div><button onclick="checkRadios('translation')">Check answers / Проверить</button> <button class="secondary" onclick="resetRadios('translation')">Reset</button><div id="translationScore" class="score"></div></section>
+<section class="panel" id="forms"><h2>6. CHOOSE THE CORRECT FORM — Выберите подходящую форму</h2><p>Учитывайте время и значение предложения.</p><div id="formTasks"></div><button onclick="checkRadios('forms')">Check answers / Проверить</button> <button class="secondary" onclick="resetRadios('forms')">Reset</button><div id="formsScore" class="score"></div></section>
+<section class="panel" id="final"><h2>7. FINAL TEST — Итоговый тест</h2><p>10 вопросов по Passive Voice. За каждый правильный ответ — 1 балл.</p><div id="finalTasks"></div><button onclick="checkRadios('final')">Finish test / Завершить тест</button> <button class="secondary" onclick="resetRadios('final')">Try again / Повторить</button><div id="finalScore" class="score"></div><div class="progress"><div id="progressBar"></div></div><div id="certificate" class="rule" style="display:none"></div></section>
+</main><footer>Passive Voice • Interactive Grammar Trainer • Learn, practise and check yourself!</footer>
+<script>
+const orderData=[
+["is / English / spoken / in many countries / .","English is spoken in many countries."],
+["the car / was / repaired / yesterday / .","The car was repaired yesterday."],
+["will / the results / be / announced / tomorrow / ?","Will the results be announced tomorrow?"],
+["being / the road / is / repaired / now / .","The road is being repaired now."],
+["has / the homework / been / completed / .","The homework has been completed."],
+["must / safety rules / be / followed / .","Safety rules must be followed."],
+["were / the windows / cleaned / last week / .","The windows were cleaned last week."],
+["being / the engine / was / checked / at noon / .","The engine was being checked at noon."],
+["had / the room / been / cleaned / before we arrived / .","The room had been cleaned before we arrived."],
+["by students / this book / was / written / .","This book was written by students."]
+];
+const gapData=[
+["Cars ___ in this factory every day.",["are produced","is produced","were produced"],0],
+["The bridge ___ in 1998.",["is built","was built","has build"],1],
+["The documents ___ tomorrow.",["will send","will be sent","are sent"],1],
+["Look! The road ___ now.",["is repaired","is being repaired","was being repaired"],1],
+["The work ___ already ___.",["has / been finished","have / finished","is / finish"],0],
+["The classrooms ___ every afternoon.",["clean","are cleaned","is cleaning"],1],
+["The machine ___ when I entered the workshop.",["was being repaired","is repaired","has repaired"],0],
+["The instructions must ___ carefully.",["follow","be followed","been followed"],1],
+["The letter had ___ before I came.",["been delivered","be delivered","being delivered"],0],
+["These products ___ in Kazakhstan.",["makes","are made","is make"],1]
+];
+const matchData=[
+["am / is / are + V3","Present Simple Passive — facts, routines and regular actions. / Факты, привычные и регулярные действия."],
+["was / were + V3","Past Simple Passive — completed actions in the past. / Завершённые действия в прошлом."],
+["will be + V3","Future Simple Passive — actions in the future. / Действия в будущем."],
+["am / is / are + being + V3","Present Continuous Passive — actions happening now. / Действия, происходящие сейчас."],
+["was / were + being + V3","Past Continuous Passive — actions in progress at a past moment. / Действия в процессе в определённый момент прошлого."],
+["has / have + been + V3","Present Perfect Passive — completed actions with a present result. / Завершённые действия с результатом в настоящем."],
+["had + been + V3","Past Perfect Passive — actions completed before another past action. / Действия, завершившиеся до другого действия в прошлом."],
+["modal + be + V3","Modal Passive — possibility, obligation or advice. / Возможность, обязанность или совет."]
+];
+const transData=[
+["The cars are made in Japan.",["Автомобили производят в Японии.","Автомобили производили в Японии.","Автомобили будут производить в Японии."],0],
+["The window was broken yesterday.",["Окно разбивают каждый день.","Окно разбили вчера.","Окно будет разбито завтра."],1],
+["The work will be finished next week.",["Работа завершена на прошлой неделе.","Работа выполняется сейчас.","Работа будет закончена на следующей неделе."],2],
+["The room is being cleaned now.",["Комнату сейчас убирают.","Комнату убрали вчера.","Комнату убирают каждый день."],0],
+["The documents have been signed.",["Документы подпишут.","Документы подписаны.","Документы подписывали вчера."],1],
+["English is spoken in many countries.",["На многих языках говорят в Англии.","На английском говорят во многих странах.","Английский изучали во многих странах."],1],
+["The engine was being checked at 10 a.m.",["Двигатель проверят в десять утра.","Двигатель проверяли в десять утра.","Двигатель проверяют каждое утро."],1],
+["The task must be completed today.",["Задание должно быть выполнено сегодня.","Задание было выполнено вчера.","Задание выполняется каждый день."],0],
+["The house had been built before 2000.",["Дом строят с 2000 года.","Дом был построен до 2000 года.","Дом будет построен после 2000 года."],1],
+["The invitations were sent by email.",["Приглашения отправят по электронной почте.","Приглашения отправлялись по электронной почте.","Приглашения были отправлены по электронной почте."],2]
+];
+const formData=[
+["Every year, thousands of cars ___ in this plant.",["are produced","is produced","were produced"],0],
+["The computer ___ by the technician yesterday.",["is repaired","was repaired","will be repaired"],1],
+["The new sports centre ___ next month.",["will open","will be opened","was opened"],1],
+["Be quiet! The patient ___ by the doctor.",["is examined","is being examined","was examined"],1],
+["The road ___ when we passed by.",["was being repaired","is repaired","has repaired"],0],
+["The report ___ already ___.",["has / been written","have / wrote","is / writing"],0],
+["All safety rules ___ be followed.",["must","must to","must been"],0],
+["The emails ___ every morning.",["is checked","are checked","were checking"],1],
+["The thief ___ by the police last night.",["was arrested","is arrested","has arrest"],0],
+["The classroom ___ before the students arrived.",["had been cleaned","has been cleaning","was clean"],0]
+];
+const finalData=[
+["Choose the correct Passive formula.",["subject + be + V3","subject + have + V-ing","subject + do + V1"],0],
+["The verb in Passive Voice is used in…",["V1","V2","V3"],2],
+["Coffee ___ in Brazil.",["grows","is grown","is grow"],1],
+["The museum ___ in 1920.",["was opened","is opened","has open"],0],
+["The new hospital ___ next year.",["will build","will be built","is building"],1],
+["The car is ___ at the moment.",["repair","being repaired","been repaired"],1],
+["The letters have ___ sent.",["be","being","been"],2],
+["The rules must ___ obeyed.",["be","been","are"],0],
+["Which sentence is Passive?",["The chef cooks dinner.","Dinner is cooked by the chef.","The chef is cooking dinner."],1],
+["The classroom ___ before the lesson started.",["had been prepared","has prepared","was preparing"],0]
+];
+function norm(s){return s.toLowerCase().replace(/[.,?!]/g,'').replace(/\s+/g,' ').trim()}
+function renderOrder(){orderTasks.innerHTML=orderData.map((x,i)=>`<div class="task"><b>${i+1}. Words:</b> <span>${x[0]}</span><input id="ord${i}" type="text" placeholder="Type the complete sentence..."><div class="feedback" id="ordfb${i}"></div></div>`).join('')}
+function checkOrder(){let n=0;orderData.forEach((x,i)=>{let ok=norm(document.getElementById('ord'+i).value)===norm(x[1]),f=document.getElementById('ordfb'+i);f.className='feedback '+(ok?'correct':'wrong');f.textContent=ok?'✓ Correct!':'✗ Correct answer: '+x[1];if(ok)n++});orderScore.textContent=`Your score: ${n} / 10`}
+function resetOrder(){orderData.forEach((x,i)=>{document.getElementById('ord'+i).value='';document.getElementById('ordfb'+i).textContent=''});orderScore.textContent=''}
+function renderRadios(id,data){document.getElementById(id+'Tasks').innerHTML=data.map((q,i)=>`<div class="task"><b>${i+1}. ${q[0]}</b><div class="options">${q[1].map((a,j)=>`<label><input type="radio" name="${id}${i}" value="${j}"> ${String.fromCharCode(65+j)}. ${a}</label>`).join('')}</div><div class="feedback" id="${id}fb${i}"></div></div>`).join('')}
+function checkRadios(id){let data={gaps:gapData,translation:transData,forms:formData,final:finalData}[id],n=0;data.forEach((q,i)=>{let el=document.querySelector(`input[name="${id}${i}"]:checked`),ok=el&&Number(el.value)===q[2],f=document.getElementById(id+'fb'+i);f.className='feedback '+(ok?'correct':'wrong');f.textContent=ok?'✓ Correct!':'✗ Correct answer: '+q[1][q[2]];if(ok)n++});document.getElementById(id+'Score').textContent=`Your score: ${n} / ${data.length}`;if(id==='final'){progressBar.style.width=n*10+'%';certificate.style.display='block';certificate.innerHTML=`<h3>${n>=9?'EXCELLENT! Отлично!':n>=7?'VERY GOOD! Очень хорошо!':n>=5?'GOOD WORK! Хорошая работа!':'KEEP PRACTISING! Продолжайте тренироваться!'}</h3><p>Your result: <b>${n} / 10</b>. ${n>=7?'You have a good understanding of Passive Voice.':'Review the theory and try again.'}</p>`}}
+function resetRadios(id){let data={gaps:gapData,translation:transData,forms:formData,final:finalData}[id];data.forEach((q,i)=>{document.querySelectorAll(`input[name="${id}${i}"]`).forEach(x=>x.checked=false);let f=document.getElementById(id+'fb'+i);f.textContent='';f.className='feedback'});document.getElementById(id+'Score').textContent='';if(id==='final'){progressBar.style.width='0';certificate.style.display='none'}}
+function buildMatching(){let shuffled=[...matchData].sort(()=>Math.random()-.5);matchTasks.innerHTML=matchData.map((m,i)=>`<div class="matchrow"><div class="formula">${m[0]}</div><div><select id="mat${i}"><option value="">Choose a rule...</option>${shuffled.map(s=>`<option value="${matchData.indexOf(s)}">${s[1]}</option>`).join('')}</select><div class="feedback" id="matfb${i}"></div></div></div>`).join('')}
+function checkMatching(){let n=0;matchData.forEach((m,i)=>{let ok=document.getElementById('mat'+i).value===String(i),f=document.getElementById('matfb'+i);f.className='feedback '+(ok?'correct':'wrong');f.textContent=ok?'✓ Correct!':'✗ Correct rule: '+m[1];if(ok)n++});matchScore.textContent=`Your score: ${n} / ${matchData.length}`}
+renderOrder();renderRadios('gaps',gapData);renderRadios('translation',transData);renderRadios('forms',formData);renderRadios('final',finalData);buildMatching();
+</script></body></html>

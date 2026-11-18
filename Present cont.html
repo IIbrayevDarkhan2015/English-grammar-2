@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Present Continuous — Интерактивная игра</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #333;
+  }
+  .container {
+    max-width: 1050px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    overflow: hidden;
+  }
+  header {
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+    color: #fff;
+    padding: 30px;
+    text-align: center;
+  }
+  header h1 { font-size: 2.2em; margin-bottom: 10px; text-shadow: 1px 1px 3px rgba(0,0,0,0.2); }
+  header p { font-size: 1.1em; opacity: 0.95; }
+
+  .tabs {
+    display: flex;
+    flex-wrap: wrap;
+    background: #f0f2f5;
+    border-bottom: 2px solid #e0e0e0;
+  }
+  .tab {
+    flex: 1;
+    min-width: 140px;
+    padding: 14px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: 600;
+    color: #555;
+    transition: all 0.3s;
+    border: none;
+    background: transparent;
+    font-size: 0.95em;
+  }
+  .tab:hover { background: #e3e7ec; }
+  .tab.active {
+    background: #fff;
+    color: #f5576c;
+    border-bottom: 3px solid #f5576c;
+  }
+
+  .content { padding: 30px; min-height: 500px; }
+  .section { display: none; }
+  .section.active { display: block; animation: fadeIn 0.4s; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  h2 { color: #f5576c; margin-bottom: 20px; font-size: 1.8em; }
+  h3 { color: #764ba2; margin: 20px 0 10px; }
+
+  .rule-card {
+    background: #fff5f7;
+    border-left: 5px solid #f5576c;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+  }
+  .rule-card .en {
+    font-size: 1.05em;
+    color: #333;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .rule-card .ru {
+    font-size: 0.98em;
+    color: #666;
+    font-style: italic;
+    margin-bottom: 12px;
+  }
+  .rule-card .formula {
+    background: #fff;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-family: 'Courier New', monospace;
+    color: #764ba2;
+    font-weight: bold;
+    margin: 10px 0;
+    display: inline-block;
+    border: 1px dashed #764ba2;
+  }
+  .rule-card .example {
+    background: #e8f5e9;
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-top: 10px;
+    border-left: 3px solid #4caf50;
+  }
+  .rule-card .example .ex-en { font-weight: 600; color: #2e7d32; }
+  .rule-card .example .ex-ru { color: #555; font-style: italic; }
+
+  /* Matching */
+  .matching-area {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+  }
+  .match-col h3 { text-align: center; margin-bottom: 15px; }
+  .match-item {
+    background: #fff;
+    border: 2px solid #ddd;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.95em;
+  }
+  .match-item:hover { border-color: #f5576c; transform: translateX(3px); }
+  .match-item.selected {
+    background: #ffe3e8;
+    border-color: #f5576c;
+    box-shadow: 0 0 10px rgba(245,87,108,0.4);
+  }
+  .match-item.correct {
+    background: #c8e6c9;
+    border-color: #4caf50;
+    pointer-events: none;
+  }
+  .match-item.wrong {
+    background: #ffcdd2;
+    border-color: #f44336;
+  }
+
+  .btn {
+    background: linear-gradient(135deg, #f5576c, #fa709a);
+    color: #fff;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+    margin-top: 15px;
+    transition: transform 0.2s;
+  }
+  .btn:hover { transform: scale(1.05); }
+  .btn.secondary { background: linear-gradient(135deg, #764ba2, #667eea); }
+  .btn.small { padding: 8px 18px; font-size: 0.9em; margin-top: 0; }
+
+  /* Word order */
+  .wo-card {
+    background: #fff5f7;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    border-left: 5px solid #f5576c;
+  }
+  .wo-card .ru-hint {
+    color: #666;
+    font-style: italic;
+    margin-bottom: 12px;
+    font-size: 0.95em;
+  }
+  .word-bank, .word-slot {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    min-height: 50px;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    align-items: center;
+  }
+  .word-bank { background: #f0f2f5; }
+  .word-slot { background: #fff; border: 2px dashed #f5576c; }
+  .word {
+    background: #f5576c;
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .word:hover { background: #fa709a; transform: translateY(-2px); }
+  .word.done {
+    background: #4caf50;
+    cursor: default;
+  }
+  .wo-feedback {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: 600;
+    min-height: 20px;
+  }
+  .wo-feedback.ok { background: #c8e6c9; color: #2e7d32; }
+  .wo-feedback.bad { background: #ffcdd2; color: #c62828; }
+
+  .score-bar {
+    background: #f0f2f5;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .score-bar strong { color: #f5576c; font-size: 1.2em; }
+
+  /* Fill gaps */
+  .gap-card {
+    background: #fff5f7;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    border-left: 5px solid #764ba2;
+  }
+  .gap-sentence {
+    font-size: 1.2em;
+    margin-bottom: 15px;
+    color: #333;
+  }
+  .gap-sentence .blank {
+    display: inline-block;
+    min-width: 120px;
+    border-bottom: 3px solid #f5576c;
+    text-align: center;
+    padding: 2px 8px;
+    margin: 0 4px;
+    color: #f5576c;
+    font-weight: bold;
+  }
+  .gap-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .gap-option {
+    background: #fff;
+    border: 2px solid #ddd;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 600;
+    color: #555;
+  }
+  .gap-option:hover { border-color: #f5576c; background: #ffe3e8; }
+  .gap-option.correct { background: #c8e6c9; border-color: #4caf50; color: #2e7d32; }
+  .gap-option.wrong { background: #ffcdd2; border-color: #f44336; color: #c62828; }
+  .gap-option.disabled { pointer-events: none; opacity: 0.7; }
+
+  /* Translate */
+  .question-box {
+    background: #fff8e1;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    border-left: 5px solid #ffc107;
+  }
+  .question-box .en-sentence {
+    font-size: 1.3em;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  .options { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
+  .option {
+    background: #fff;
+    border: 2px solid #ddd;
+    padding: 12px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+  }
+  .option:hover { border-color: #f5576c; background: #fff5f7; }
+  .option.correct { background: #c8e6c9; border-color: #4caf50; }
+  .option.wrong { background: #ffcdd2; border-color: #f44336; }
+  .option.disabled { pointer-events: none; }
+
+  .feedback {
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    display: none;
+  }
+  .feedback.show { display: block; animation: fadeIn 0.3s; }
+  .feedback.ok { background: #c8e6c9; color: #2e7d32; }
+  .feedback.bad { background: #ffcdd2; color: #c62828; }
+
+  .nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+
+  .progress-bar {
+    width: 100%;
+    height: 10px;
+    background: #f0f2f5;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 15px;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #f5576c, #fa709a);
+    transition: width 0.4s;
+  }
+
+  @media (max-width: 600px) {
+    .matching-area { grid-template-columns: 1fr; }
+    .tab { min-width: 100px; font-size: 0.8em; padding: 10px 5px; }
+    header h1 { font-size: 1.5em; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>🎮 Present Continuous — Интерактивная игра</h1>
+    <p>Действие происходит прямо сейчас! Изучай, тренируйся, побеждай!</p>
+  </header>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="rules">📖 Правила</button>
+    <button class="tab" data-tab="wordorder">🔤 Порядок слов</button>
+    <button class="tab" data-tab="gaps">📝 Пропущенные глаголы</button>
+    <button class="tab" data-tab="matching">🧩 Matching</button>
+    <button class="tab" data-tab="translate">🌍 Перевод</button>
+  </div>
+
+  <div class="content">
+
+    <!-- ============ RULES ============ -->
+    <div class="section active" id="rules">
+      <h2>📘 Present Continuous / Настоящее Длительное</h2>
+
+      <div class="rule-card">
+        <div class="en"><b>Usage:</b> We use the Present Continuous to talk about actions happening <b>right now</b>, at the moment of speaking, or around the current period (temporary situations). It is also used for <b>fixed future arrangements</b>.</div>
+        <div class="ru"><b>Использование:</b> Мы используем Present Continuous, чтобы говорить о действиях, происходящих <b>прямо сейчас</b>, в момент речи, или в текущий период (временные ситуации). Также используется для <b>запланированных будущих событий</b>.</div>
+        <div class="example">
+          <div class="ex-en">I <u>am reading</u> a book now. / She <u>is staying</u> with her friend this week.</div>
+          <div class="ex-ru">Я <u>читаю</u> книгу сейчас. / Она <u>гостит</u> у подруги на этой неделе.</div>
+        </div>
+      </div>
+
+      <h3>✅ 1. Affirmative Sentences / Утвердительные предложения</h3>
+      <div class="rule-card">
+        <div class="en"><b>Rule:</b> Subject + <b>am / is / are</b> + verb-<b>ing</b>.</div>
+        <div class="ru"><b>Правило:</b> Субъект + <b>am / is / are</b> + глагол с окончанием <b>-ing</b>.</div>
+        <div class="formula">I + am + V-ing &nbsp;|&nbsp; He/She/It + is + V-ing &nbsp;|&nbsp; You/We/They + are + V-ing</div>
+        <div class="example">
+          <div class="ex-en">I am working. / He is playing football. / They are watching TV.</div>
+          <div class="ex-ru">Я работаю. / Он играет в футбол. / Они смотрят телевизор.</div>
+        </div>
+      </div>
+
+      <h3>❌ 2. Negative Sentences / Отрицательные предложения</h3>
+      <div class="rule-card">
+        <div class="en"><b>Rule:</b> Subject + <b>am / is / are + not</b> + verb-<b>ing</b>.</div>
+        <div class="ru"><b>Правило:</b> Субъект + <b>am / is / are + not</b> + глагол с окончанием <b>-ing</b>.</div>
+        <div class="formula">S + am/is/are + not + V-ing</div>
+        <div class="example">
+          <div class="ex-en">I am not sleeping. / She isn't (is not) cooking. / We aren't (are not) listening.</div>
+          <div class="ex-ru">Я не сплю. / Она не готовит. / Мы не слушаем.</div>
+        </div>
+      </div>
+
+      <h3>❓ 3. Questions / Вопросительные предложения</h3>
+      <div class="rule-card">
+        <div class="en"><b>Rule:</b> <b>Am / Is / Are</b> + subject + verb-<b>ing</b>?</div>
+        <div class="ru"><b>Правило:</b> <b>Am / Is / Are</b> выносится на первое место + субъект + глагол с <b>-ing</b>?</div>
+        <div class="formula">Am/Is/Are + S + V-ing ?</div>
+        <div class="example">
+          <div class="ex-en">Are you studying? / Is he working? / Am I late?</div>
+          <div class="ex-ru">Ты учишься? / Он работает? / Я опаздываю?</div>
+        </div>
+      </div>
+
+      <h3>🔤 4. Spelling rules for -ing / Правила правописания -ing</h3>
+      <div class="rule-card">
+        <div class="en">
+          Most verbs → add <b>-ing</b> (work → working, play → playing).<br>
+          Verbs ending in <b>-e</b> → drop <b>e</b> + <b>-ing</b> (make → making, write → writing).<br>
+          Verbs ending in <b>-ie</b> → change to <b>-y + ing</b> (die → dying, lie → lying).<br>
+          Short verbs with 1 vowel + 1 consonant → double the consonant (run → running, sit → sitting, swim → swimming).<br>
+          <b>⚠️ Stative verbs</b> (love, know, believe, want, understand) are NOT used in Continuous!
+        </div>
+        <div class="ru">
+          Большинство глаголов → добавляем <b>-ing</b> (work → working, play → playing).<br>
+          Глаголы на <b>-e</b> → убираем <b>e</b> + <b>-ing</b> (make → making, write → writing).<br>
+          Глаголы на <b>-ie</b> → меняем на <b>-y + ing</b> (die → dying, lie → lying).<br>
+          Короткие глаголы с 1 гласной + 1 согласной → удваиваем согласную (run → running, sit → sitting, swim → swimming).<br>
+          <b>⚠️ Глаголы состояния</b> (love, know, believe, want, understand) НЕ используются в Continuous!
+        </div>
+        <div class="example">
+          <div class="ex-en">I <u>know</u> the answer. (NOT: I am knowing)</div>
+          <div class="ex-ru">Я <u>знаю</u> ответ. (НЕ: I am knowing)</div>
+        </div>
+      </div>
+
+      <h3>⏰ 5. Signal words / Слова-подсказки</h3>
+      <div class="rule-card">
+        <div class="en"><b>now, right now, at the moment, currently, today, Look!, Listen!</b></div>
+        <div class="ru"><b>сейчас, прямо сейчас, в данный момент, в настоящее время, сегодня, Смотри!, Слушай!</b></div>
+        <div class="example">
+          <div class="ex-en">Look! It <u>is snowing</u>. / I am busy <u>right now</u>.</div>
+          <div class="ex-ru">Смотри! <u>Идёт</u> снег. / Я занят <u>прямо сейчас</u>.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ WORD ORDER ============ -->
+    <div class="section" id="wordorder">
+      <h2>🔤 Put the words in the correct order</h2>
+      <p style="color:#666; margin-bottom:15px;">Click words to move them between the bank and your sentence. / Нажимай на слова, чтобы перемещать их между банком и предложением.</p>
+
+      <div class="score-bar">
+        <span>Sentence: <strong id="woNum">1</strong> / 10</span>
+        <span>Correct: <strong id="woScore">0</strong></span>
+      </div>
+
+      <div class="progress-bar"><div class="progress-fill" id="woProgress" style="width:10%"></div></div>
+
+      <div id="woArea"></div>
+    </div>
+
+    <!-- ============ GAPS ============ -->
+    <div class="section" id="gaps">
+      <h2>📝 Fill in the correct verb form</h2>
+      <p style="color:#666; margin-bottom:15px;">Choose the correct Present Continuous form. / Выбери правильную форму Present Continuous.</p>
+
+      <div class="score-bar">
+        <span>Question: <strong id="gNum">1</strong> / <span id="gTotal">10</span></span>
+        <span>Score: <strong id="gScore">0</strong></span>
+      </div>
+
+      <div class="progress-bar"><div class="progress-fill" id="gProgress" style="width:10%"></div></div>
+
+      <div id="gapsArea"></div>
+    </div>
+
+    <!-- ============ MATCHING ============ -->
+    <div class="section" id="matching">
+      <h2>🧩 Matching: Formula ↔ Rule</h2>
+      <p style="margin-bottom:15px; color:#666;">Click a formula on the left, then click its rule on the right. / Нажми на формулу слева, затем на её правило справа.</p>
+
+      <div class="score-bar">
+        <span>Matched: <strong id="matchScore">0</strong> / 5</span>
+        <button class="btn secondary small" onclick="resetMatching()">🔄 Reset</button>
+      </div>
+
+      <div class="matching-area">
+        <div class="match-col">
+          <h3>📐 Formulas</h3>
+          <div id="formulas"></div>
+        </div>
+        <div class="match-col">
+          <h3>📝 Rules</h3>
+          <div id="rulesList"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ TRANSLATE ============ -->
+    <div class="section" id="translate">
+      <h2>🌍 Choose the correct translation</h2>
+      <div class="score-bar">
+        <span>Question: <strong id="qNum">1</strong> / <span id="qTotal">7</span></span>
+        <span>Score: <strong id="tScore">0</strong></span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="tProgress" style="width:14%"></div></div>
+      <div id="translateArea"></div>
+      <div class="nav-buttons">
+        <button class="btn" id="nextQ" onclick="nextQuestion()" style="display:none;">Next question →</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+/* ============ TABS ============ */
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.tab).classList.add('active');
+  });
+});
+
+/* ============ WORD ORDER (10 sentences) ============ */
+const wordOrderData = [
+  {
+    ru: 'Она читает книгу прямо сейчас.',
+    words: ['reading', 'is', 'She', 'a', 'book', 'now', '.'],
+    correct: ['She', 'is', 'reading', 'a', 'book', 'now', '.']
+  },
+  {
+    ru: 'Они играют в футбол в парке.',
+    words: ['football', 'playing', 'in', 'They', 'the', 'are', 'park', '.'],
+    correct: ['They', 'are', 'playing', 'football', 'in', 'the', 'park', '.']
+  },
+  {
+    ru: 'Я изучаю английский в данный момент.',
+    words: ['studying', 'moment', 'am', 'at', 'English', 'the', 'I', '.'],
+    correct: ['I', 'am', 'studying', 'English', 'at', 'the', 'moment', '.']
+  },
+  {
+    ru: 'Он не смотрит телевизор сейчас.',
+    words: ['TV', 'not', 'watching', 'is', 'He', 'now', '.'],
+    correct: ['He', 'is', 'not', 'watching', 'TV', 'now', '.']
+  },
+  {
+    ru: 'Ты слушаешь меня?',
+    words: ['to', 'Are', 'me', 'you', 'listening', '?'],
+    correct: ['Are', 'you', 'listening', 'to', 'me', '?']
+  },
+  {
+    ru: 'Дети спят наверху.',
+    words: ['sleeping', 'The', 'upstairs', 'are', 'children', '.'],
+    correct: ['The', 'children', 'are', 'sleeping', 'upstairs', '.']
+  },
+  {
+    ru: 'Мы ужинаем вместе.',
+    words: ['dinner', 'together', 'We', 'are', 'having', '.'],
+    correct: ['We', 'are', 'having', 'dinner', 'together', '.']
+  },
+  {
+    ru: 'Моя сестра пишет письмо.',
+    words: ['letter', 'sister', 'a', 'My', 'is', 'writing', '.'],
+    correct: ['My', 'sister', 'is', 'writing', 'a', 'letter', '.']
+  },
+  {
+    ru: 'На улице идёт дождь.',
+    words: ['raining', 'It', 'outside', 'is', '.'],
+    correct: ['It', 'is', 'raining', 'outside', '.']
+  },
+  {
+    ru: 'Собака бегает по саду.',
+    words: ['in', 'The', 'running', 'dog', 'the', 'is', 'garden', '.'],
+    correct: ['The', 'dog', 'is', 'running', 'in', 'the', 'garden', '.']
+  }
+];
+
+let woIndex = 0;
+let woScore = 0;
+
+function renderWordOrder() {
+  if (woIndex >= wordOrderData.length) {
+    document.getElementById('woArea').innerHTML = `
+      <div class="wo-card" style="text-align:center; background:#e8f5e9;">
+        <h2 style="color:#2e7d32;">🏆 Well done! / Отлично!</h2>
+        <p style="font-size:1.3em; margin:15px 0;">You got <b>${woScore}</b> out of <b>${wordOrderData.length}</b> correct</p>
+        <p style="color:#555;">Ты правильно собрал <b>${woScore}</b> из <b>${wordOrderData.length}</b> предложений</p>
+        <button class="btn" onclick="restartWordOrder()">🔁 Try again</button>
+      </div>
+    `;
+    return;
+  }
+  const q = wordOrderData[woIndex];
+  const shuffled = [...q.words].sort(() => Math.random() - 0.5);
+  document.getElementById('woNum').textContent = woIndex + 1;
+  document.getElementById('woProgress').style.width = ((woIndex + 1) / wordOrderData.length * 100) + '%';
+  document.getElementById('woArea').innerHTML = `
+    <div class="wo-card">
+      <div class="ru-hint">🇷🇺 ${q.ru}</div>
+      <div style="color:#666; font-size:0.9em; margin-bottom:5px;">📦 Word bank / Банк слов:</div>
+      <div class="word-bank" id="woBank"></div>
+      <div style="color:#666; font-size:0.9em; margin-bottom:5px;">✍️ Your sentence / Твоё предложение:</div>
+      <div class="word-slot" id="woSlot"></div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="btn small" onclick="checkWordOrder()">✓ Check</button>
+        <button class="btn secondary small" onclick="renderWordOrder()">🔄 Reset</button>
+      </div>
+      <div class="wo-feedback" id="woFb"></div>
+    </div>
+  `;
+  const bank = document.getElementById('woBank');
+  shuffled.forEach((w, i) => {
+    const span = document.createElement('span');
+    span.className = 'word';
+    span.textContent = w;
+    span.dataset.word = w;
+    span.onclick = () => moveWord(span);
+    bank.appendChild(span);
+  });
+}
+
+function moveWord(el) {
+  const bank = document.getElementById('woBank');
+  const slot = document.getElementById('woSlot');
+  if (el.parentElement === slot) {
+    bank.appendChild(el);
+  } else {
+    slot.appendChild(el);
+  }
+}
+
+function checkWordOrder() {
+  const q = wordOrderData[woIndex];
+  const slot = document.getElementById('woSlot');
+  const words = Array.from(slot.children).map(c => c.dataset.word);
+  const fb = document.getElementById('woFb');
+  if (words.length !== q.correct.length) {
+    fb.className = 'wo-feedback bad';
+    fb.textContent = '⚠️ Use all the words! / Используй все слова!';
+    return;
+  }
+  if (JSON.stringify(words) === JSON.stringify(q.correct)) {
+    fb.className = 'wo-feedback ok';
+    fb.textContent = `✅ Perfect! / Идеально! → ${q.correct.join(' ')}`;
+    woScore++;
+    document.getElementById('woScore').textContent = woScore;
+    Array.from(slot.children).forEach(c => c.classList.add('done'));
+    setTimeout(() => { woIndex++; renderWordOrder(); }, 1700);
+  } else {
+    fb.className = 'wo-feedback bad';
+    fb.textContent = `❌ Try again. Correct: ${q.correct.join(' ')}`;
+  }
+}
+
+function restartWordOrder() {
+  woIndex = 0;
+  woScore = 0;
+  document.getElementById('woScore').textContent = 0;
+  renderWordOrder();
+}
+
+renderWordOrder();
+
+/* ============ FILL GAPS ============ */
+const gapsData = [
+  { sentence: 'Look! It ___ outside.', options: ['rains', 'is raining', 'are raining', 'rain'], correct: 1, ru: 'Смотри! На улице идёт дождь.' },
+  { sentence: 'I ___ a book at the moment.', options: ['read', 'am reading', 'is reading', 'reads'], correct: 1, ru: 'Я читаю книгу в данный момент.' },
+  { sentence: 'She ___ to the radio right now.', options: ['listen', 'listens', 'is listening', 'are listening'], correct: 2, ru: 'Она слушает радио прямо сейчас.' },
+  { sentence: 'They ___ football in the park.', options: ['plays', 'are playing', 'is playing', 'play'], correct: 1, ru: 'Они играют в футбол в парке.' },
+  { sentence: 'We ___ dinner at the moment.', options: ['are having', 'has', 'is having', 'have'], correct: 0, ru: 'Мы ужинаем в данный момент.' },
+  { sentence: '___ you ___ English now?', options: ['Do / study', 'Are / studying', 'Is / studying', 'Does / study'], correct: 1, ru: 'Ты изучаешь английский сейчас?' },
+  { sentence: 'My brother ___ TV at the moment.', options: ["isn't watching", "aren't watching", "doesn't watch", "don't watch"], correct: 0, ru: 'Мой брат не смотрит телевизор сейчас.' },
+  { sentence: 'The children ___ in the garden.', options: ['plays', 'is playing', 'are playing', 'play'], correct: 2, ru: 'Дети играют в саду.' },
+  { sentence: 'Listen! Somebody ___ the piano.', options: ['play', 'plays', 'is playing', 'are playing'], correct: 2, ru: 'Слушай! Кто-то играет на пианино.' },
+  { sentence: 'I ___ for the bus right now.', options: ['wait', 'waits', 'am waiting', 'is waiting'], correct: 2, ru: 'Я жду автобус прямо сейчас.' }
+];
+
+let gIndex = 0;
+let gScore = 0;
+document.getElementById('gTotal').textContent = gapsData.length;
+
+function renderGap() {
+  if (gIndex >= gapsData.length) {
+    document.getElementById('gapsArea').innerHTML = `
+      <div class="gap-card" style="text-align:center; background:#e8f5e9;">
+        <h2 style="color:#2e7d32;">🏆 Great job! / Отличная работа!</h2>
+        <p style="font-size:1.3em; margin:15px 0;">Score: <b>${gScore}</b> / ${gapsData.length}</p>
+        <button class="btn" onclick="restartGaps()">🔁 Try again</button>
+      </div>
+    `;
+    return;
+  }
+  const q = gapsData[gIndex];
+  document.getElementById('gNum').textContent = gIndex + 1;
+  document.getElementById('gProgress').style.width = ((gIndex + 1) / gapsData.length * 100) + '%';
+  const parts = q.sentence.split('___');
+  const sentenceHtml = `${parts[0]}<span class="blank" id="gapBlank">?</span>${parts[1] || ''}`;
+  document.getElementById('gapsArea').innerHTML = `
+    <div class="gap-card">
+      <div style="color:#666; font-style:italic; margin-bottom:10px;">🇷🇺 ${q.ru}</div>
+      <div class="gap-sentence">${sentenceHtml}</div>
+      <div class="gap-options" id="gapOpts"></div>
+      <div class="feedback" id="gapFb"></div>
+    </div>
+  `;
+  const opts = document.getElementById('gapOpts');
+  q.options.forEach((o, i) => {
+    const b = document.createElement('button');
+    b.className = 'gap-option';
+    b.textContent = o;
+    b.onclick = () => checkGap(i, b);
+    opts.appendChild(b);
+  });
+}
+
+function checkGap(i, btn) {
+  const q = gapsData[gIndex];
+  document.querySelectorAll('#gapOpts .gap-option').forEach(o => o.classList.add('disabled'));
+  const blank = document.getElementById('gapBlank');
+  const fb = document.getElementById('gapFb');
+  if (i === q.correct) {
+    btn.classList.add('correct');
+    blank.textContent = q.options[q.correct];
+    blank.style.color = '#2e7d32';
+    fb.className = 'feedback show ok';
+    fb.textContent = '✅ Correct! / Правильно!';
+    gScore++;
+    document.getElementById('gScore').textContent = gScore;
+  } else {
+    btn.classList.add('wrong');
+    blank.textContent = q.options[q.correct];
+    blank.style.color = '#c62828';
+    fb.className = 'feedback show bad';
+    fb.textContent = `❌ Correct: ${q.options[q.correct]}`;
+  }
+  setTimeout(() => { gIndex++; renderGap(); }, 1500);
+}
+
+function restartGaps() {
+  gIndex = 0;
+  gScore = 0;
+  document.getElementById('gScore').textContent = 0;
+  renderGap();
+}
+
+renderGap();
+
+/* ============ MATCHING ============ */
+const matchData = [
+  { id: 1, formula: "S + am/is/are + V-ing", rule: "Affirmative Present Continuous — we use am/is/are + verb-ing to show an action happening now." },
+  { id: 2, formula: "S + am/is/are + not + V-ing", rule: "Negative Present Continuous — we add 'not' after am/is/are to make a negative sentence." },
+  { id: 3, formula: "Am/Is/Are + S + V-ing ?", rule: "Question in Present Continuous — Am/Is/Are goes first, then the subject and the verb-ing." },
+  { id: 4, formula: "Verb ending in -e → drop -e + -ing", rule: "Spelling rule: verbs like 'make', 'write', 'dance' drop the final 'e' before adding -ing." },
+  { id: 5, formula: "Short verb (CVC) → double consonant + -ing", rule: "Spelling rule: short verbs like 'run', 'sit', 'swim' double the final consonant before -ing." }
+];
+
+let selectedFormula = null;
+let matchedCount = 0;
+const matched = new Set();
+
+function renderMatching() {
+  const fCol = document.getElementById('formulas');
+  const rCol = document.getElementById('rulesList');
+  fCol.innerHTML = '';
+  rCol.innerHTML = '';
+
+  const shuffledRules = [...matchData].sort(() => Math.random() - 0.5);
+
+  matchData.forEach(m => {
+    const div = document.createElement('div');
+    div.className = 'match-item';
+    div.textContent = m.formula;
+    div.dataset.id = m.id;
+    div.dataset.type = 'formula';
+    if (matched.has(m.id)) div.classList.add('correct');
+    div.onclick = () => selectMatch(div, 'formula');
+    fCol.appendChild(div);
+  });
+
+  shuffledRules.forEach(m => {
+    const div = document.createElement('div');
+    div.className = 'match-item';
+    div.textContent = m.rule;
+    div.dataset.id = m.id;
+    div.dataset.type = 'rule';
+    if (matched.has(m.id)) div.classList.add('correct');
+    div.onclick = () => selectMatch(div, 'rule');
+    rCol.appendChild(div);
+  });
+}
+
+function selectMatch(el, type) {
+  if (matched.has(+el.dataset.id)) return;
+  if (type === 'formula') {
+    document.querySelectorAll('#formulas .match-item').forEach(i => i.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedFormula = el;
+  } else if (type === 'rule' && selectedFormula) {
+    if (selectedFormula.dataset.id === el.dataset.id) {
+      selectedFormula.classList.remove('selected');
+      selectedFormula.classList.add('correct');
+      el.classList.add('correct');
+      matched.add(+el.dataset.id);
+      matchedCount++;
+      document.getElementById('matchScore').textContent = matchedCount;
+      selectedFormula = null;
+      if (matchedCount === matchData.length) {
+        setTimeout(() => alert('🎉 Perfect! All formulas matched! / Все формулы сопоставлены!'), 200);
+      }
+    } else {
+      selectedFormula.classList.add('wrong');
+      el.classList.add('wrong');
+      const f = selectedFormula;
+      setTimeout(() => {
+        f.classList.remove('wrong', 'selected');
+        el.classList.remove('wrong');
+      }, 800);
+      selectedFormula = null;
+    }
+  }
+}
+
+function resetMatching() {
+  matched.clear();
+  matchedCount = 0;
+  selectedFormula = null;
+  document.getElementById('matchScore').textContent = 0;
+  renderMatching();
+}
+
+renderMatching();
+
+/* ============ TRANSLATE ============ */
+const translations = [
+  {
+    en: "She is reading a book now.",
+    options: [
+      "Она читает книгу сейчас.",
+      "Она читала книгу сейчас.",
+      "Она читает книгу каждый день.",
+      "Она прочитает книгу сейчас."
+    ],
+    correct: 0
+  },
+  {
+    en: "They are playing football in the park.",
+    options: [
+      "Они играют в футбол в парке каждый день.",
+      "Они играют в футбол в парке сейчас.",
+      "Они играли в футбол в парке.",
+      "Они будут играть в футбол в парке."
+    ],
+    correct: 1
+  },
+  {
+    en: "I am not watching TV at the moment.",
+    options: [
+      "Я не смотрю телевизор в данный момент.",
+      "Я не смотрю телевизор обычно.",
+      "Я не смотрел телевизор вчера.",
+      "Я не люблю смотреть телевизор."
+    ],
+    correct: 0
+  },
+  {
+    en: "Are you listening to me?",
+    options: [
+      "Ты слушаешь меня обычно?",
+      "Ты слушал меня?",
+      "Ты слушаешь меня?",
+      "Ты будешь слушать меня?"
+    ],
+    correct: 2
+  },
+  {
+    en: "Look! It is raining outside.",
+    options: [
+      "Смотри! На улице идёт дождь.",
+      "Смотри! На улице шёл дождь.",
+      "Смотри! На улице часто идёт дождь.",
+      "Смотри! На улице пойдёт дождь."
+    ],
+    correct: 0
+  },
+  {
+    en: "My sister is writing a letter.",
+    options: [
+      "Моя сестра пишет письмо каждый день.",
+      "Моя сестра писала письмо.",
+      "Моя сестра пишет письмо сейчас.",
+      "Моя сестра напишет письмо."
+    ],
+    correct: 2
+  },
+  {
+    en: "We are having dinner together.",
+    options: [
+      "Мы ужинаем вместе обычно.",
+      "Мы ужинали вместе.",
+      "Мы пообедаем вместе.",
+      "Мы ужинаем вместе сейчас."
+    ],
+    correct: 3
+  }
+];
+
+let currentQ = 0;
+let translateScore = 0;
+document.getElementById('qTotal').textContent = translations.length;
+
+function renderQuestion() {
+  const q = translations[currentQ];
+  document.getElementById('qNum').textContent = currentQ + 1;
+  document.getElementById('tProgress').style.width = ((currentQ + 1) / translations.length * 100) + '%';
+  const area = document.getElementById('translateArea');
+  area.innerHTML = `
+    <div class="question-box">
+      <div class="en-sentence">🇬🇧 ${q.en}</div>
+      <div style="color:#666; font-style:italic;">Choose the correct Russian translation:</div>
+      <div class="options" id="opts"></div>
+    </div>
+    <div class="feedback" id="fb"></div>
+  `;
+  const opts = document.getElementById('opts');
+  q.options.forEach((opt, i) => {
+    const b = document.createElement('button');
+    b.className = 'option';
+    b.textContent = opt;
+    b.onclick = () => checkTranslation(i, b);
+    opts.appendChild(b);
+  });
+  document.getElementById('nextQ').style.display = 'none';
+}
+
+function checkTranslation(i, btn) {
+  const q = translations[currentQ];
+  const fb = document.getElementById('fb');
+  document.querySelectorAll('#opts .option').forEach(o => o.classList.add('disabled'));
+  if (i === q.correct) {
+    btn.classList.add('correct');
+    fb.className = 'feedback show ok';
+    fb.textContent = '✅ Correct! / Правильно!';
+    translateScore++;
+  } else {
+    btn.classList.add('wrong');
+    document.querySelectorAll('#opts .option')[q.correct].classList.add('correct');
+    fb.className = 'feedback show bad';
+    fb.textContent = `❌ Wrong. Correct: ${q.options[q.correct]}`;
+  }
+  document.getElementById('tScore').textContent = translateScore;
+  document.getElementById('nextQ').style.display = 'inline-block';
+  if (currentQ === translations.length - 1) {
+    document.getElementById('nextQ').textContent = '🏁 Finish & see result';
+  }
+}
+
+function nextQuestion() {
+  currentQ++;
+  if (currentQ >= translations.length) {
+    const area = document.getElementById('translateArea');
+    area.innerHTML = `
+      <div class="question-box" style="text-align:center; background:#e8f5e9;">
+        <h2 style="color:#2e7d32;">🏆 Result / Результат</h2>
+        <p style="font-size:1.4em; margin:15px 0;">You scored <b>${translateScore}</b> out of <b>${translations.length}</b></p>
+        <p style="font-size:1.1em; color:#555;">Ты набрал <b>${translateScore}</b> из <b>${translations.length}</b></p>
+        <button class="btn" onclick="restartTranslate()">🔁 Try again</button>
+      </div>
+    `;
+    document.getElementById('nextQ').style.display = 'none';
+    return;
+  }
+  renderQuestion();
+}
+
+function restartTranslate() {
+  currentQ = 0;
+  translateScore = 0;
+  document.getElementById('tScore').textContent = 0;
+  document.getElementById('nextQ').textContent = 'Next question →';
+  renderQuestion();
+}
+
+renderQuestion();
+</script>
+</body>
+</html>

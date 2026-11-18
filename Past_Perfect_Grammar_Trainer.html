@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grammar Trainer: Past Perfect & Past Perfect Continuous</title>
+<style>
+:root{--navy:#183153;--blue:#2563eb;--teal:#0f766e;--red:#b42318;--green:#15803d;--bg:#f3f6fb;--card:#fff;--muted:#5b6575;--line:#dbe3ef}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#172033;font:16px/1.55 Arial,Helvetica,sans-serif}
+header{background:linear-gradient(120deg,#142b4a,#245b91);color:white;padding:30px 18px}
+.wrap{max-width:1050px;margin:auto;padding:0 16px}h1{margin:0 0 8px;font-size:clamp(25px,4vw,38px)}header p{margin:0;color:#e5eefb}
+nav{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--line);z-index:5;display:flex;gap:8px;overflow:auto;padding:10px max(16px,calc((100% - 1050px)/2))}
+nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:bold;padding:8px 11px;border-radius:20px;background:#edf3fb;font-size:14px}
+main{max-width:1050px;margin:22px auto;padding:0 16px}.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;margin:18px 0;box-shadow:0 5px 18px #17345a0b}
+h2{color:var(--navy);margin:0 0 14px;font-size:25px}h3{color:#24496e;margin:18px 0 8px}
+.lead{font-size:17px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.rule{background:#f7faff;border:1px solid #dce8f7;border-radius:12px;padding:15px}.rule strong{color:var(--navy)}
+.formula{font-size:18px;font-weight:bold;color:#124b85;background:#eaf2ff;padding:10px;border-radius:8px;margin:8px 0}
+.translation{color:#475569;margin-top:5px}.example{border-left:4px solid #35a2a0;padding:8px 12px;background:#f1fbfa;margin:8px 0;border-radius:0 8px 8px 0}
+.tip{background:#fff8e8;border-left:4px solid #e5a000;padding:12px;border-radius:8px;margin:12px 0}
+button{border:0;border-radius:9px;padding:10px 15px;background:var(--blue);color:white;font-weight:bold;cursor:pointer;font-size:15px}
+button:hover{filter:brightness(.94)}button.secondary{background:#e8eef7;color:#193654}button.green{background:var(--teal)}
+input[type=text],select{width:100%;padding:10px;border:1px solid #b9c7d8;border-radius:8px;font:inherit;background:white}
+.task{padding:14px 0;border-bottom:1px solid var(--line)}.task:last-child{border:0}.task p{margin:4px 0 8px}.small{font-size:14px;color:var(--muted)}
+.options{display:grid;gap:7px;margin:8px 0}.options label{display:block;padding:8px 10px;border:1px solid var(--line);border-radius:8px;cursor:pointer}.options label:hover{background:#f4f8ff}
+.feedback{margin-top:7px;font-weight:bold;font-size:14px}.correct{color:var(--green)}.wrong{color:var(--red)}
+.score{font-weight:bold;color:var(--navy);margin:10px 0}.badge{display:inline-block;background:#e7f1ff;color:#164a82;padding:4px 9px;border-radius:20px;font-size:13px;font-weight:bold}
+.matchrow{display:grid;grid-template-columns:1fr 1.2fr;gap:12px;align-items:center;margin:10px 0}.matchrow .formula{margin:0;font-size:15px}
+.progress{height:9px;background:#e5eaf1;border-radius:10px;overflow:hidden;margin:12px 0}.progress>div{height:100%;background:#1b9a8a;width:0%;transition:.3s}
+footer{text-align:center;color:var(--muted);padding:25px}
+@media(max-width:600px){.panel{padding:16px}.matchrow{grid-template-columns:1fr}.formula{font-size:16px}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<span class="badge">INTERACTIVE GRAMMAR TRAINER</span>
+<h1>PAST PERFECT &amp; PAST PERFECT CONTINUOUS</h1>
+<p>Подробное объяснение на английском языке с переводом на русский • упражнения • проверка ответов • финальный тест</p>
+</div></header>
+<nav>
+<a href="#theory">Theory / Правила</a><a href="#order">Word order</a><a href="#gaps">Gap filling</a><a href="#matching">Matching</a><a href="#translation">Translation</a><a href="#forms">Choose the form</a><a href="#final">Final test</a>
+</nav>
+<main>
+<section class="panel" id="theory">
+<h2>1. THEORY — Правила и объяснения</h2>
+<p class="lead">Both tenses describe actions connected with a point in the past. The main difference is what we want to emphasize: <b>the result/completion</b> or <b>the duration/process</b>.</p>
+<p class="translation">Оба времени описывают действия, связанные с определённым моментом в прошлом. Главное различие: мы подчёркиваем <b>результат/завершённость</b> или <b>длительность/процесс</b>.</p>
+<div class="grid">
+<div class="rule">
+<h3>PAST PERFECT</h3>
+<p><b>Use:</b> We use the Past Perfect for an action that was completed before another action or a specific time in the past.</p>
+<p class="translation"><b>Употребление:</b> Past Perfect используется для действия, которое завершилось до другого действия или определённого момента в прошлом.</p>
+<div class="formula">Subject + had + V3</div>
+<p><b>Negative:</b> Subject + had not (hadn't) + V3</p>
+<p><b>Question:</b> Had + subject + V3?</p>
+<p class="translation">Отрицание: подлежащее + had not + третья форма глагола. Вопрос: Had + подлежащее + третья форма?</p>
+<div class="example"><b>She had finished her homework before her mother came.</b><br>Она закончила домашнее задание до того, как пришла мама.</div>
+<div class="example"><b>They hadn't seen that film before.</b><br>Они раньше не смотрели этот фильм.</div>
+<div class="example"><b>Had you ever visited London before 2020?</b><br>Ты когда-нибудь посещал Лондон до 2020 года?</div>
+</div>
+<div class="rule">
+<h3>PAST PERFECT CONTINUOUS</h3>
+<p><b>Use:</b> We use the Past Perfect Continuous for an action that had been continuing for some time before another action or a point in the past. It emphasizes duration or the process.</p>
+<p class="translation"><b>Употребление:</b> Past Perfect Continuous используется для действия, которое продолжалось в течение некоторого времени до другого действия или момента в прошлом. Подчёркивает длительность или процесс.</p>
+<div class="formula">Subject + had been + V-ing</div>
+<p><b>Negative:</b> Subject + had not been + V-ing</p>
+<p><b>Question:</b> Had + subject + been + V-ing?</p>
+<p class="translation">Отрицание: подлежащее + had not been + глагол с -ing. Вопрос: Had + подлежащее + been + глагол с -ing?</p>
+<div class="example"><b>He had been repairing the car for two hours when I arrived.</b><br>Он ремонтировал машину уже два часа, когда я приехал.</div>
+<div class="example"><b>It had not been raining for long.</b><br>Дождь шёл недолго.</div>
+<div class="example"><b>Had they been waiting long before the bus came?</b><br>Они долго ждали до того, как приехал автобус?</div>
+</div>
+</div>
+<h3>Compare the tenses — Сравните времена</h3>
+<div class="grid">
+<div class="rule"><span class="badge">PAST PERFECT — RESULT</span><p><b>When the mechanic arrived, the driver had repaired the tyre.</b></p><p class="translation">Когда механик приехал, водитель уже починил шину. Важен результат: шина была починена.</p></div>
+<div class="rule"><span class="badge">PAST PERFECT CONTINUOUS — DURATION</span><p><b>When the mechanic arrived, the driver had been repairing the tyre for an hour.</b></p><p class="translation">Когда механик приехал, водитель чинил шину уже час. Важна длительность процесса.</p></div>
+</div>
+<h3>Signal words — Слова-подсказки</h3>
+<div class="grid">
+<div class="rule"><b>Past Perfect</b><p>already — уже; just — только что; never — никогда; before — до; after — после; by the time — к тому времени, когда.</p></div>
+<div class="rule"><b>Past Perfect Continuous</b><p>for — в течение; since — с какого-то момента; how long — как долго; all day — весь день; before — до того как.</p></div>
+</div>
+<div class="tip"><b>Remember! / Запомните!</b><br>Past Perfect focuses on <b>WHAT had happened</b> (что произошло / результат). Past Perfect Continuous focuses on <b>HOW LONG it had been happening</b> (как долго продолжалось действие). Stative verbs such as know, believe, like and understand are not normally used in continuous forms.</div>
+<h3>Timeline — Временная линия</h3>
+<div class="rule">
+<p><b>Earlier past action</b> → <b>Later past action</b> → <b>Now</b></p>
+<p>had finished / had been working → arrived / called → present</p>
+<p class="translation">Сначала произошло или продолжалось первое действие, затем произошло второе действие в прошлом.</p>
+</div>
+</section>
+
+<section class="panel" id="order">
+<h2>2. WORD ORDER — Расставьте слова в правильном порядке</h2>
+<p>Составьте 10 предложений. Напишите предложение с заглавной буквы и поставьте точку. Порядок слов дан в перемешанном виде.</p>
+<div id="orderTasks"></div><button onclick="checkTextTasks('order')">Check answers / Проверить</button> <button class="secondary" onclick="resetTextTasks('order')">Reset</button><div id="orderScore" class="score"></div>
+</section>
+
+<section class="panel" id="gaps">
+<h2>3. GAP FILLING — Вставьте пропущенную форму глагола</h2>
+<p>Выберите правильный вариант ответа.</p><div id="gapTasks"></div><button onclick="checkRadios('gaps')">Check answers / Проверить</button> <button class="secondary" onclick="resetRadios('gaps')">Reset</button><div id="gapsScore" class="score"></div>
+</section>
+
+<section class="panel" id="matching">
+<h2>4. MATCHING — Соедините формулу и правило</h2>
+<p>Выберите правильное объяснение для каждой грамматической формулы.</p><div id="matchTasks"></div><button onclick="checkMatching()">Check answers / Проверить</button> <button class="secondary" onclick="buildMatching()">Reset</button><div id="matchScore" class="score"></div>
+</section>
+
+<section class="panel" id="translation">
+<h2>5. CHOOSE THE CORRECT TRANSLATION — Выберите правильный перевод</h2>
+<p>Прочитайте предложение на английском языке и выберите его правильный перевод.</p><div id="translationTasks"></div><button onclick="checkRadios('translation')">Check answers / Проверить</button> <button class="secondary" onclick="resetRadios('translation')">Reset</button><div id="translationScore" class="score"></div>
+</section>
+
+<section class="panel" id="forms">
+<h2>6. CHOOSE THE CORRECT FORM — Выберите подходящую форму</h2>
+<p>Выберите Past Perfect или Past Perfect Continuous, учитывая смысл предложения.</p><div id="formTasks"></div><button onclick="checkRadios('forms')">Check answers / Проверить</button> <button class="secondary" onclick="resetRadios('forms')">Reset</button><div id="formsScore" class="score"></div>
+</section>
+
+<section class="panel" id="final">
+<h2>7. FINAL TEST — Итоговый тест</h2>
+<p>Проверьте, насколько хорошо вы усвоили две грамматические темы. В тесте 10 вопросов. За каждый правильный ответ — 1 балл.</p><div id="finalTasks"></div><button onclick="checkRadios('final')">Finish test / Завершить тест</button> <button class="secondary" onclick="resetRadios('final')">Try again / Повторить</button><div id="finalScore" class="score"></div>
+<div class="progress"><div id="progressBar"></div></div>
+<div id="certificate" class="rule" style="display:none"></div>
+</section>
+</main>
+<footer>Grammar Trainer • Past Perfect &amp; Past Perfect Continuous • Learn, practise and check yourself!</footer>
+<script>
+const orderData=[
+["had / finished / She / her project / before / the deadline","She had finished her project before the deadline."],
+["been / for / had / They / waiting / an hour","They had been waiting for an hour."],
+["the train / had / left / before / We / arrived","The train had left before we arrived."],
+["been / He / had / studying / all evening","He had been studying all evening."],
+["hadn't / I / seen / that man / before","I hadn't seen that man before."],
+["been / working / How long / she / had / there / ?","How long had she been working there?"],
+["the mechanic / had / repaired / The car / before / noon","The mechanic had repaired the car before noon."],
+["had / been / It / snowing / since morning","It had been snowing since morning."],
+["they / Had / completed / the task / before / the lesson / ?","Had they completed the task before the lesson?"],
+["been / had not / We / driving / for long","We had not been driving for long."]
+];
+const gapData=[
+["By the time we arrived, the film ___ .",["had started","had been starting","has started"],0],
+["Tom was tired because he ___ all day.",["had worked","had been working","has been working"],1],
+["She ___ the report before the meeting began.",["had written","had been writing","writes"],0],
+["The road was wet because it ___ .",["had rained","had been raining","has rained"],1],
+["I ___ that book before you recommended it.",["had read","had been reading","have read"],0],
+["They were dirty because they ___ the engine.",["had repaired","had been repairing","have repaired"],1],
+["When I called, he ___ already ___ home.",["had / gone","had been / going","has / gone"],0],
+["Her eyes were red because she ___ .",["had cried","had been crying","has cried"],1],
+["We ___ dinner before the guests arrived.",["had prepared","had been preparing","prepare"],0],
+["How long ___ you ___ before the bus came?",["had / waited","had been / waiting","have / waited"],1]
+];
+const matchData=[
+["had + V3","An action completed before another past action. / Действие завершилось до другого действия в прошлом."],
+["had been + V-ing","An action continued for some time before a past moment. / Действие продолжалось до момента в прошлом."],
+["had not + V3","Negative form of Past Perfect. / Отрицательная форма Past Perfect."],
+["had not been + V-ing","Negative form of Past Perfect Continuous. / Отрицательная форма Past Perfect Continuous."],
+["Had + subject + V3?","Question form of Past Perfect. / Вопросительная форма Past Perfect."],
+["Had + subject + been + V-ing?","Question form of Past Perfect Continuous. / Вопросительная форма Past Perfect Continuous."]
+];
+const transData=[
+["She had locked the door before she left.",["Она закрыла дверь на ключ до того, как ушла.","Она закрывает дверь, когда уходит.","Она запирала дверь весь вечер."],0],
+["They had been playing football for an hour.",["Они сыграли в футбол за час.","Они играли в футбол уже час.","Они будут играть в футбол час."],1],
+["I had never visited this city before.",["Я никогда раньше не посещал этот город.","Я никогда не посещаю этот город.","Я посещал этот город весь день."],0],
+["He was exhausted because he had been running.",["Он устал, потому что побегал один раз.","Он устал, потому что бегал некоторое время.","Он устает, когда бегает."],1],
+["The lesson had begun when we entered.",["Урок начался, когда мы вошли.","Урок начнётся после нашего входа.","Урок продолжался весь день."],0],
+["How long had she been learning English?",["Как долго она изучала английский к тому моменту?","Как долго она будет изучать английский?","Она уже выучила английский?"],0],
+["We had repaired the car before Friday.",["Мы ремонтировали машину всю пятницу.","Мы отремонтировали машину до пятницы.","Мы ремонтируем машину по пятницам."],1],
+["It had been raining all night.",["Дождь шёл всю ночь до того момента в прошлом.","Дождь начнётся ночью.","Дождь только что закончился."],0],
+["Had you finished your work before 6 p.m.?",["Ты закончил работу до шести вечера?","Ты работаешь до шести вечера?","Ты работал шесть часов?"],0],
+["The students had been waiting since 9 o'clock.",["Студенты ждали с девяти часов до определённого момента в прошлом.","Студенты будут ждать до девяти.","Студенты пришли ровно в девять."],0]
+];
+const formData=[
+["When the teacher arrived, we ___ the exercise.",["had completed","had been completing"],0,"The exercise was finished: result / Упражнение было завершено — результат."],
+["He was covered in oil because he ___ the engine.",["had checked","had been checking"],1,"The activity explains his condition / Процесс объясняет, почему он был весь в масле."],
+["By 8 p.m., they ___ the machine.",["had repaired","had been repairing"],0,"The repair was completed by that time / Ремонт был завершён к тому времени."],
+["She was tired because she ___ for three hours.",["had studied","had been studying"],1,"The duration is emphasized / Подчёркивается длительность."],
+["I ___ him before we worked together.",["had known","had been knowing"],0,"Know is a stative verb and is not normally continuous / Know обычно не используется в Continuous."],
+["The ground was wet. It ___ .",["had rained","had been raining"],1,"The process caused the result / Процесс вызвал результат."],
+["After he ___ the instructions, he switched on the device.",["had read","had been reading"],0,"Reading was completed before the next action / Чтение завершилось до следующего действия."],
+["Her hands were dirty because she ___ in the garden.",["had worked","had been working"],1,"The ongoing activity explains the evidence / Длительный процесс объясняет результат."],
+["They ___ the project before the presentation started.",["had finished","had been finishing"],0,"The project was completed / Проект был завершён."],
+["How long ___ you ___ before you took a break?",["had / worked","had been / working"],1,"How long asks about duration / How long спрашивает о длительности."]
+];
+const finalData=[
+["Past Perfect is formed with…",["had + V3","had been + V-ing","have + V3"],0],
+["Past Perfect Continuous is formed with…",["had + V3","had been + V-ing","was + V-ing"],1],
+["When I arrived, they ___ dinner.",["had eaten","had been eating"],0],
+["She was sleepy because she ___ all night.",["had studied","had been studying"],1],
+["Choose the correct negative form.",["He hadn't finished.","He hadn't been finish.","He not had finished."],0],
+["Choose the correct question.",["Had they left?","Did they had left?","Had left they?"],0],
+["Which tense emphasizes duration?",["Past Perfect","Past Perfect Continuous"],1],
+["By the time the doctor came, the patient ___ asleep.",["had fallen","had been falling"],0],
+["He was tired because he ___ the car for hours.",["had driven","had been driving"],1],
+["Which verb is not normally used in continuous forms?",["run","wait","know"],2]
+];
+function renderOrder(){document.getElementById('orderTasks').innerHTML=orderData.map((x,i)=>`<div class="task"><b>${i+1}. Words:</b> <span class="small">${x[0]}</span><input type="text" id="order${i}" placeholder="Type the complete sentence here..."><div class="feedback" id="orderfb${i}"></div></div>`).join('')}
+function norm(s){return s.toLowerCase().replace(/[.,?!]/g,'').replace(/\s+/g,' ').trim()}
+function checkTextTasks(id){let n=0;orderData.forEach((x,i)=>{let ok=norm(document.getElementById('order'+i).value)===norm(x[1]);let f=document.getElementById('orderfb'+i);f.className='feedback '+(ok?'correct':'wrong');f.textContent=ok?'✓ Correct!':'✗ Correct answer: '+x[1];if(ok)n++});document.getElementById('orderScore').textContent=`Your score: ${n} / 10`}
+function resetTextTasks(){orderData.forEach((x,i)=>{document.getElementById('order'+i).value='';document.getElementById('orderfb'+i).textContent=''});document.getElementById('orderScore').textContent=''}
+function renderRadios(id,data){document.getElementById(id+'Tasks').innerHTML=data.map((q,i)=>`<div class="task"><b>${i+1}. ${q[0]}</b><div class="options">${q[1].map((a,j)=>`<label><input type="radio" name="${id}${i}" value="${j}"> ${String.fromCharCode(65+j)}. ${a}</label>`).join('')}</div><div class="feedback" id="${id}fb${i}"></div></div>`).join('')}
+function checkRadios(id){let data={gaps:gapData,translation:transData,forms:formData,final:finalData}[id],n=0;data.forEach((q,i)=>{let el=document.querySelector(`input[name="${id}${i}"]:checked`),ok=el&&Number(el.value)===q[2];let f=document.getElementById(id+'fb'+i);f.className='feedback '+(ok?'correct':'wrong');f.textContent=ok?'✓ Correct!':'✗ Correct answer: '+q[1][q[2]]+(q[3]?' — '+q[3]:'');if(ok)n++});document.getElementById(id+'Score').textContent=`Your score: ${n} / ${data.length}`;if(id==='final'){document.getElementById('progressBar').style.width=(n/10*100)+'%';let c=document.getElementById('certificate');c.style.display='block';c.innerHTML=`<h3>${n>=9?'EXCELLENT! Отлично!':n>=7?'VERY GOOD! Очень хорошо!':n>=5?'GOOD WORK! Хорошая работа!':'KEEP PRACTISING! Продолжайте тренироваться!'}</h3><p>You scored <b>${n} out of 10</b>. ${n>=7?'You have a good understanding of the two tenses.':'Review the theory and try the test again.'}</p>`}}
+function resetRadios(id){let data={gaps:gapData,translation:transData,forms:formData,final:finalData}[id];data.forEach((q,i)=>{document.querySelectorAll(`input[name="${id}${i}"]`).forEach(x=>x.checked=false);let f=document.getElementById(id+'fb'+i);f.textContent='';f.className='feedback'});document.getElementById(id+'Score').textContent='';if(id==='final'){document.getElementById('progressBar').style.width='0';document.getElementById('certificate').style.display='none'}}
+function buildMatching(){let shuffled=[...matchData].sort(()=>Math.random()-.5);document.getElementById('matchTasks').innerHTML=matchData.map((m,i)=>`<div class="matchrow"><div class="formula">${m[0]}</div><div><select id="match${i}"><option value="">Choose a rule...</option>${shuffled.map(s=>`<option value="${matchData.indexOf(s)}">${s[1]}</option>`).join('')}</select><div class="feedback" id="matchfb${i}"></div></div></div>`).join('')}
+function checkMatching(){let n=0;matchData.forEach((m,i)=>{let ok=document.getElementById('match'+i).value===String(i),f=document.getElementById('matchfb'+i);f.className='feedback '+(ok?'correct':'wrong');f.textContent=ok?'✓ Correct!':'✗ Correct match: '+m[1];if(ok)n++});document.getElementById('matchScore').textContent=`Your score: ${n} / 6`}
+renderOrder();renderRadios('gaps',gapData);renderRadios('translation',transData);renderRadios('forms',formData);renderRadios('final',finalData);buildMatching();
+</script>
+</body></html>

@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Present Simple — Интерактивная игра</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #333;
+  }
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    overflow: hidden;
+  }
+  header {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    color: #fff;
+    padding: 30px;
+    text-align: center;
+  }
+  header h1 { font-size: 2.2em; margin-bottom: 10px; }
+  header p { font-size: 1.1em; opacity: 0.95; }
+
+  .tabs {
+    display: flex;
+    flex-wrap: wrap;
+    background: #f0f2f5;
+    border-bottom: 2px solid #e0e0e0;
+  }
+  .tab {
+    flex: 1;
+    min-width: 150px;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: 600;
+    color: #555;
+    transition: all 0.3s;
+    border: none;
+    background: transparent;
+    font-size: 1em;
+  }
+  .tab:hover { background: #e3e7ec; }
+  .tab.active {
+    background: #fff;
+    color: #4facfe;
+    border-bottom: 3px solid #4facfe;
+  }
+
+  .content { padding: 30px; min-height: 500px; }
+  .section { display: none; }
+  .section.active { display: block; animation: fadeIn 0.4s; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  h2 { color: #4facfe; margin-bottom: 20px; font-size: 1.8em; }
+  h3 { color: #764ba2; margin: 20px 0 10px; }
+
+  .rule-card {
+    background: #f8f9ff;
+    border-left: 5px solid #4facfe;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+  }
+  .rule-card .en {
+    font-size: 1.1em;
+    color: #333;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .rule-card .ru {
+    font-size: 1em;
+    color: #666;
+    font-style: italic;
+    margin-bottom: 12px;
+  }
+  .rule-card .formula {
+    background: #fff;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-family: 'Courier New', monospace;
+    color: #764ba2;
+    font-weight: bold;
+    margin: 10px 0;
+    display: inline-block;
+    border: 1px dashed #764ba2;
+  }
+  .rule-card .example {
+    background: #e8f5e9;
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-top: 10px;
+    border-left: 3px solid #4caf50;
+  }
+  .rule-card .example .ex-en { font-weight: 600; color: #2e7d32; }
+  .rule-card .example .ex-ru { color: #555; font-style: italic; }
+
+  /* Matching */
+  .matching-area {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+  }
+  .match-col h3 { text-align: center; margin-bottom: 15px; }
+  .match-item {
+    background: #fff;
+    border: 2px solid #ddd;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.95em;
+  }
+  .match-item:hover { border-color: #4facfe; transform: translateX(3px); }
+  .match-item.selected {
+    background: #e3f2fd;
+    border-color: #4facfe;
+    box-shadow: 0 0 10px rgba(79,172,254,0.4);
+  }
+  .match-item.correct {
+    background: #c8e6c9;
+    border-color: #4caf50;
+  }
+  .match-item.wrong {
+    background: #ffcdd2;
+    border-color: #f44336;
+  }
+
+  .btn {
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    color: #fff;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+    margin-top: 15px;
+    transition: transform 0.2s;
+  }
+  .btn:hover { transform: scale(1.05); }
+  .btn.secondary { background: linear-gradient(135deg, #764ba2, #667eea); }
+
+  /* Translation exercise */
+  .question-box {
+    background: #fff8e1;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    border-left: 5px solid #ffc107;
+  }
+  .question-box .en-sentence {
+    font-size: 1.3em;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  .options { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
+  .option {
+    background: #fff;
+    border: 2px solid #ddd;
+    padding: 12px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+  }
+  .option:hover { border-color: #4facfe; background: #f0f8ff; }
+  .option.correct { background: #c8e6c9; border-color: #4caf50; }
+  .option.wrong { background: #ffcdd2; border-color: #f44336; }
+  .option.disabled { pointer-events: none; }
+
+  .feedback {
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    display: none;
+  }
+  .feedback.show { display: block; animation: fadeIn 0.3s; }
+  .feedback.ok { background: #c8e6c9; color: #2e7d32; }
+  .feedback.bad { background: #ffcdd2; color: #c62828; }
+
+  .score-bar {
+    background: #f0f2f5;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .score-bar strong { color: #4facfe; font-size: 1.2em; }
+
+  /* Adverbs */
+  .scale-container {
+    margin: 30px 0;
+    padding: 20px;
+    background: #f8f9ff;
+    border-radius: 15px;
+  }
+  .scale {
+    position: relative;
+    height: 60px;
+    background: linear-gradient(to right, #f44336 0%, #ff9800 25%, #ffeb3b 50%, #8bc34a 75%, #4caf50 100%);
+    border-radius: 30px;
+    margin: 40px 0;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
+  }
+  .scale-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85em;
+    color: #666;
+    margin-top: -10px;
+    margin-bottom: 20px;
+  }
+  .adverb-bank {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  .adverb-chip {
+    background: #fff;
+    border: 2px solid #764ba2;
+    color: #764ba2;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: grab;
+    font-weight: 600;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .adverb-chip:hover { background: #764ba2; color: #fff; }
+  .adverb-chip.placed {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    border-color: #4facfe;
+    color: #4facfe;
+    padding: 5px 12px;
+    font-size: 0.9em;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  .adverb-chip.correct-place { background: #c8e6c9; border-color: #4caf50; color: #2e7d32; }
+  .adverb-chip.wrong-place { background: #ffcdd2; border-color: #f44336; color: #c62828; }
+
+  .word-order {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 15px 0;
+    border: 2px dashed #764ba2;
+  }
+  .word-bank {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 15px;
+    min-height: 50px;
+  }
+  .word-slot {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    min-height: 50px;
+    padding: 10px;
+    background: #f0f2f5;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+  .word {
+    background: #4facfe;
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+  .word:hover { background: #00f2fe; }
+  .word.used { opacity: 0.3; pointer-events: none; }
+
+  .nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+
+  @media (max-width: 600px) {
+    .matching-area { grid-template-columns: 1fr; }
+    .tab { min-width: 100px; font-size: 0.85em; padding: 10px 5px; }
+    header h1 { font-size: 1.5em; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>🎮 Present Simple — Интерактивная игра</h1>
+    <p>Изучай правила, тренируйся и становись мастером грамматики!</p>
+  </header>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="rules">📖 Правила</button>
+    <button class="tab" data-tab="matching">🧩 Matching</button>
+    <button class="tab" data-tab="translate">🌍 Перевод</button>
+    <button class="tab" data-tab="adverbs">⏱️ Наречия частотности</button>
+  </div>
+
+  <div class="content">
+
+    <!-- ============ RULES ============ -->
+    <div class="section active" id="rules">
+      <h2>📘 Правила Present Simple / Rules of Present Simple</h2>
+
+      <div class="rule-card">
+        <div class="en"><b>Usage:</b> We use the Present Simple to talk about habits, routines, general truths, and fixed schedules.</div>
+        <div class="ru"><b>Использование:</b> Мы используем Present Simple, чтобы говорить о привычках, рутине, общих истинах и фиксированных расписаниях.</div>
+        <div class="example">
+          <div class="ex-en">I drink coffee every morning. / The sun rises in the east.</div>
+          <div class="ex-ru">Я пью кофе каждое утро. / Солнце встаёт на востоке.</div>
+        </div>
+      </div>
+
+      <h3>✅ 1. Affirmative Sentences / Утвердительные предложения</h3>
+      <div class="rule-card">
+        <div class="en"><b>Rule:</b> Subject + base verb. For <b>he / she / it</b> (3rd person singular) we add <b>-s / -es</b> to the verb.</div>
+        <div class="ru"><b>Правило:</b> Субъект + базовая форма глагола. Для <b>he / she / it</b> (3-е лицо единственного числа) мы добавляем <b>-s / -es</b> к глаголу.</div>
+        <div class="formula">I / You / We / They + V &nbsp;&nbsp;|&nbsp;&nbsp; He / She / It + V-s/-es</div>
+        <div class="example">
+          <div class="ex-en">She works in a bank. / They play football on Sundays.</div>
+          <div class="ex-ru">Она работает в банке. / Они играют в футбол по воскресеньям.</div>
+        </div>
+      </div>
+
+      <h3>❌ 2. Negative Sentences / Отрицательные предложения</h3>
+      <div class="rule-card">
+        <div class="en"><b>Rule:</b> We use the auxiliary verb <b>do / does + not</b> (don't / doesn't) + base verb. The main verb does NOT change.</div>
+        <div class="ru"><b>Правило:</b> Мы используем вспомогательный глагол <b>do / does + not</b> (don't / doesn't) + базовая форма глагола. Основной глагол НЕ меняется.</div>
+        <div class="formula">S + do/does + not + V</div>
+        <div class="example">
+          <div class="ex-en">I don't like pizza. / He doesn't watch TV.</div>
+          <div class="ex-ru">Я не люблю пиццу. / Он не смотрит телевизор.</div>
+        </div>
+      </div>
+
+      <h3>❓ 3. Questions / Вопросительные предложения</h3>
+      <div class="rule-card">
+        <div class="en"><b>Rule:</b> We put <b>Do / Does</b> at the beginning of the sentence + subject + base verb.</div>
+        <div class="ru"><b>Правило:</b> Мы ставим <b>Do / Does</b> в начале предложения + субъект + базовая форма глагола.</div>
+        <div class="formula">Do / Does + S + V ?</div>
+        <div class="example">
+          <div class="ex-en">Do you speak English? / Does she live in London?</div>
+          <div class="ex-ru">Ты говоришь по-английски? / Она живёт в Лондоне?</div>
+        </div>
+      </div>
+
+      <h3>🔤 4. Spelling rules for 3rd person singular / Правила правописания для 3-го лица ед.ч.</h3>
+      <div class="rule-card">
+        <div class="en">Most verbs → add <b>-s</b> (works, plays).<br>
+        Verbs ending in <b>-o, -ch, -sh, -ss, -x</b> → add <b>-es</b> (goes, watches, washes, misses, fixes).<br>
+        Verbs ending in <b>consonant + y</b> → change <b>y → ies</b> (study → studies, fly → flies).</div>
+        <div class="ru">Большинство глаголов → добавляем <b>-s</b> (works, plays).<br>
+        Глаголы, оканчивающиеся на <b>-o, -ch, -sh, -ss, -x</b> → добавляем <b>-es</b> (goes, watches, washes, misses, fixes).<br>
+        Глаголы, оканчивающиеся на <b>согласную + y</b> → меняем <b>y → ies</b> (study → studies, fly → flies).</div>
+      </div>
+    </div>
+
+    <!-- ============ MATCHING ============ -->
+    <div class="section" id="matching">
+      <h2>🧩 Matching: Formula ↔ Rule</h2>
+      <p style="margin-bottom:15px; color:#666;">Click a formula on the left, then click its rule on the right. / Нажми на формулу слева, затем на её правило справа.</p>
+
+      <div class="score-bar">
+        <span>Matched: <strong id="matchScore">0</strong> / 4</span>
+        <button class="btn secondary" onclick="resetMatching()">🔄 Reset</button>
+      </div>
+
+      <div class="matching-area">
+        <div class="match-col">
+          <h3>📐 Formulas</h3>
+          <div id="formulas"></div>
+        </div>
+        <div class="match-col">
+          <h3>📝 Rules</h3>
+          <div id="rulesList"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ TRANSLATE ============ -->
+    <div class="section" id="translate">
+      <h2>🌍 Choose the correct translation</h2>
+      <div class="score-bar">
+        <span>Question: <strong id="qNum">1</strong> / <span id="qTotal">5</span></span>
+        <span>Score: <strong id="tScore">0</strong></span>
+      </div>
+      <div id="translateArea"></div>
+      <div class="nav-buttons">
+        <button class="btn" id="nextQ" onclick="nextQuestion()" style="display:none;">Next question →</button>
+      </div>
+    </div>
+
+    <!-- ============ ADVERBS ============ -->
+    <div class="section" id="adverbs">
+      <h2>⏱️ Adverbs of Frequency / Наречия частотности</h2>
+
+      <div class="rule-card">
+        <div class="en"><b>Rule:</b> Adverbs of frequency (always, usually, often, sometimes, rarely, never) show <b>how often</b> we do something. They usually go <b>before the main verb</b> but <b>after the verb "to be"</b>.</div>
+        <div class="ru"><b>Правило:</b> Наречия частотности (always, usually, often, sometimes, rarely, never) показывают, <b>как часто</b> мы что-то делаем. Они обычно стоят <b>перед основным глаголом</b>, но <b>после глагола "to be"</b>.</div>
+        <div class="example">
+          <div class="ex-en">I <u>always</u> drink tea. / She is <u>usually</u> happy.</div>
+          <div class="ex-ru">Я <u>всегда</u> пью чай. / Она <u>обычно</u> счастлива.</div>
+        </div>
+      </div>
+
+      <h3>📊 Task 1: Place the adverbs on the frequency scale</h3>
+      <p style="color:#666; margin-bottom:10px;">Drag each adverb to its correct position (0% = never, 100% = always). / Перетащи наречие на правильную позицию на шкале.</p>
+
+      <div class="scale-container">
+        <div class="adverb-bank" id="adverbBank"></div>
+        <div class="scale" id="scale"></div>
+        <div class="scale-labels">
+          <span>0% — never</span>
+          <span>25%</span>
+          <span>50%</span>
+          <span>75%</span>
+          <span>100% — always</span>
+        </div>
+        <button class="btn" onclick="checkScale()">✓ Check positions</button>
+        <button class="btn secondary" onclick="resetScale()">🔄 Reset</button>
+        <div class="feedback" id="scaleFeedback"></div>
+      </div>
+
+      <h3>🔤 Task 2: Choose the correct adverb</h3>
+      <p style="color:#666;">Read the percentage and choose the correct adverb. / Прочитай процент и выбери правильное наречие.</p>
+      <div id="adverbQuiz"></div>
+
+      <h3>🧱 Task 3: Put the words in the correct order</h3>
+      <p style="color:#666;">Remember: adverb goes <b>before the main verb</b>, but <b>after "to be"</b>. / Помни: наречие стоит <b>перед основным глаголом</b>, но <b>после "to be"</b>.</p>
+      <div id="wordOrderArea"></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+/* ============ TABS ============ */
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.tab).classList.add('active');
+  });
+});
+
+/* ============ MATCHING ============ */
+const matchData = [
+  { id: 1, formula: "S + V (base form)", rule: "Affirmative sentence with I / you / we / they — the verb stays in its base form." },
+  { id: 2, formula: "S + V-s / V-es", rule: "Affirmative sentence with he / she / it — we add -s or -es to the verb." },
+  { id: 3, formula: "S + do/does + not + V", rule: "Negative sentence — we use don't / doesn't + base verb (the main verb does NOT change)." },
+  { id: 4, formula: "Do/Does + S + V ?", rule: "Question — Do/Does comes first, then the subject and the base verb." }
+];
+
+let selectedFormula = null;
+let matchedCount = 0;
+const matched = new Set();
+
+function renderMatching() {
+  const fCol = document.getElementById('formulas');
+  const rCol = document.getElementById('rulesList');
+  fCol.innerHTML = '';
+  rCol.innerHTML = '';
+
+  // shuffle rules
+  const shuffledRules = [...matchData].sort(() => Math.random() - 0.5);
+
+  matchData.forEach(m => {
+    const div = document.createElement('div');
+    div.className = 'match-item';
+    div.textContent = m.formula;
+    div.dataset.id = m.id;
+    div.dataset.type = 'formula';
+    if (matched.has(m.id)) div.classList.add('correct');
+    div.onclick = () => selectMatch(div, 'formula');
+    fCol.appendChild(div);
+  });
+
+  shuffledRules.forEach(m => {
+    const div = document.createElement('div');
+    div.className = 'match-item';
+    div.textContent = m.rule;
+    div.dataset.id = m.id;
+    div.dataset.type = 'rule';
+    if (matched.has(m.id)) div.classList.add('correct');
+    div.onclick = () => selectMatch(div, 'rule');
+    rCol.appendChild(div);
+  });
+}
+
+function selectMatch(el, type) {
+  if (matched.has(+el.dataset.id)) return;
+  if (type === 'formula') {
+    document.querySelectorAll('#formulas .match-item').forEach(i => i.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedFormula = el;
+  } else if (type === 'rule' && selectedFormula) {
+    if (selectedFormula.dataset.id === el.dataset.id) {
+      selectedFormula.classList.remove('selected');
+      selectedFormula.classList.add('correct');
+      el.classList.add('correct');
+      matched.add(+el.dataset.id);
+      matchedCount++;
+      document.getElementById('matchScore').textContent = matchedCount;
+      selectedFormula = null;
+      if (matchedCount === 4) {
+        setTimeout(() => alert('🎉 Perfect! All formulas matched!'), 200);
+      }
+    } else {
+      selectedFormula.classList.add('wrong');
+      el.classList.add('wrong');
+      const f = selectedFormula;
+      setTimeout(() => {
+        f.classList.remove('wrong', 'selected');
+        el.classList.remove('wrong');
+      }, 800);
+      selectedFormula = null;
+    }
+  }
+}
+
+function resetMatching() {
+  matched.clear();
+  matchedCount = 0;
+  selectedFormula = null;
+  document.getElementById('matchScore').textContent = 0;
+  renderMatching();
+}
+
+renderMatching();
+
+/* ============ TRANSLATE ============ */
+const translations = [
+  {
+    en: "She works in a hospital.",
+    options: [
+      "Она работает в больнице.",
+      "Она работала в больнице.",
+      "Она будет работать в больнице.",
+      "Она работает в школе."
+    ],
+    correct: 0
+  },
+  {
+    en: "They don't watch TV in the evening.",
+    options: [
+      "Они смотрят телевизор вечером.",
+      "Они не смотрят телевизор вечером.",
+      "Они не смотрели телевизор вечером.",
+      "Они не любят телевизор вечером."
+    ],
+    correct: 1
+  },
+  {
+    en: "Does he play the guitar?",
+    options: [
+      "Он играет на гитаре?",
+      "Он играет на пианино?",
+      "Он играл на гитаре?",
+      "Он будет играть на гитаре?"
+    ],
+    correct: 0
+  },
+  {
+    en: "My cat sleeps on the sofa.",
+    options: [
+      "Мой кот спал на диване.",
+      "Мой кот спит на кровати.",
+      "Мой кот спит на диване.",
+      "Мой кот будет спать на диване."
+    ],
+    correct: 2
+  },
+  {
+    en: "We usually go to the cinema on Fridays.",
+    options: [
+      "Мы обычно ходим в кино по пятницам.",
+      "Мы обычно ходим в театр по пятницам.",
+      "Мы ходили в кино по пятницам.",
+      "Мы всегда ходим в кино по пятницам."
+    ],
+    correct: 0
+  },
+  {
+    en: "He never eats meat.",
+    options: [
+      "Он иногда ест мясо.",
+      "Он редко ест мясо.",
+      "Он никогда не ест мясо.",
+      "Он всегда ест мясо."
+    ],
+    correct: 2
+  },
+  {
+    en: "Do you speak French?",
+    options: [
+      "Ты говоришь по-немецки?",
+      "Ты говорил по-французски?",
+      "Ты говоришь по-французски?",
+      "Ты будешь говорить по-французски?"
+    ],
+    correct: 2
+  }
+];
+
+let currentQ = 0;
+let translateScore = 0;
+document.getElementById('qTotal').textContent = translations.length;
+
+function renderQuestion() {
+  const q = translations[currentQ];
+  document.getElementById('qNum').textContent = currentQ + 1;
+  const area = document.getElementById('translateArea');
+  area.innerHTML = `
+    <div class="question-box">
+      <div class="en-sentence">🇬🇧 ${q.en}</div>
+      <div style="color:#666; font-style:italic;">Choose the correct Russian translation:</div>
+      <div class="options" id="opts"></div>
+    </div>
+    <div class="feedback" id="fb"></div>
+  `;
+  const opts = document.getElementById('opts');
+  q.options.forEach((opt, i) => {
+    const b = document.createElement('button');
+    b.className = 'option';
+    b.textContent = opt;
+    b.onclick = () => checkTranslation(i, b);
+    opts.appendChild(b);
+  });
+  document.getElementById('nextQ').style.display = 'none';
+}
+
+function checkTranslation(i, btn) {
+  const q = translations[currentQ];
+  const fb = document.getElementById('fb');
+  document.querySelectorAll('#opts .option').forEach(o => o.classList.add('disabled'));
+  if (i === q.correct) {
+    btn.classList.add('correct');
+    fb.className = 'feedback show ok';
+    fb.textContent = '✅ Correct! / Правильно!';
+    translateScore++;
+  } else {
+    btn.classList.add('wrong');
+    document.querySelectorAll('#opts .option')[q.correct].classList.add('correct');
+    fb.className = 'feedback show bad';
+    fb.textContent = `❌ Wrong. Correct answer: ${q.options[q.correct]}`;
+  }
+  document.getElementById('tScore').textContent = translateScore;
+  document.getElementById('nextQ').style.display = 'inline-block';
+  if (currentQ === translations.length - 1) {
+    document.getElementById('nextQ').textContent = '🏁 Finish & see result';
+  }
+}
+
+function nextQuestion() {
+  currentQ++;
+  if (currentQ >= translations.length) {
+    const area = document.getElementById('translateArea');
+    area.innerHTML = `
+      <div class="question-box" style="text-align:center; background:#e8f5e9;">
+        <h2 style="color:#2e7d32;">🏆 Result / Результат</h2>
+        <p style="font-size:1.4em; margin:15px 0;">You scored <b>${translateScore}</b> out of <b>${translations.length}</b></p>
+        <p style="font-size:1.1em; color:#555;">Ты набрал <b>${translateScore}</b> из <b>${translations.length}</b></p>
+        <button class="btn" onclick="restartTranslate()">🔁 Try again</button>
+      </div>
+    `;
+    document.getElementById('nextQ').style.display = 'none';
+    return;
+  }
+  renderQuestion();
+}
+
+function restartTranslate() {
+  currentQ = 0;
+  translateScore = 0;
+  document.getElementById('tScore').textContent = 0;
+  document.getElementById('nextQ').textContent = 'Next question →';
+  renderQuestion();
+}
+
+renderQuestion();
+
+/* ============ ADVERBS ============ */
+const adverbs = [
+  { word: 'never', percent: 0 },
+  { word: 'rarely', percent: 15 },
+  { word: 'sometimes', percent: 50 },
+  { word: 'often', percent: 70 },
+  { word: 'usually', percent: 85 },
+  { word: 'always', percent: 100 }
+];
+
+const adverbBank = document.getElementById('adverbBank');
+const scale = document.getElementById('scale');
+let placedAdverbs = {};
+
+function renderAdverbBank() {
+  adverbBank.innerHTML = '';
+  adverbs.forEach(a => {
+    if (placedAdverbs[a.word]) return;
+    const chip = document.createElement('div');
+    chip.className = 'adverb-chip';
+    chip.textContent = a.word;
+    chip.draggable = true;
+    chip.dataset.word = a.word;
+    chip.addEventListener('dragstart', e => {
+      e.dataTransfer.setData('text', a.word);
+    });
+    // click-to-place fallback for mobile
+    chip.addEventListener('click', () => {
+      const percent = prompt(`Where to place "${a.word}"? Enter percent 0-100:`);
+      if (percent === null) return;
+      const p = Math.max(0, Math.min(100, parseInt(percent)));
+      if (isNaN(p)) return;
+      placeAdverb(a.word, p);
+    });
+    adverbBank.appendChild(chip);
+  });
+}
+
+scale.addEventListener('dragover', e => e.preventDefault());
+scale.addEventListener('drop', e => {
+  e.preventDefault();
+  const word = e.dataTransfer.getData('text');
+  const rect = scale.getBoundingClientRect();
+  const percent = Math.max(0, Math.min(100, Math.round(((e.clientX - rect.left) / rect.width) * 100)));
+  placeAdverb(word, percent);
+});
+
+function placeAdverb(word, percent) {
+  placedAdverbs[word] = percent;
+  // remove from bank
+  renderAdverbBank();
+  // place on scale
+  const existing = scale.querySelector(`.adverb-chip[data-word="${word}"]`);
+  if (existing) existing.remove();
+  const chip = document.createElement('div');
+  chip.className = 'adverb-chip placed';
+  chip.textContent = word;
+  chip.dataset.word = word;
+  chip.style.left = percent + '%';
+  chip.title = `${percent}%`;
+  chip.onclick = () => {
+    delete placedAdverbs[word];
+    chip.remove();
+    renderAdverbBank();
+  };
+  scale.appendChild(chip);
+}
+
+function checkScale() {
+  const fb = document.getElementById('scaleFeedback');
+  let allCorrect = true;
+  let placedCount = 0;
+  adverbs.forEach(a => {
+    const chip = scale.querySelector(`.adverb-chip[data-word="${a.word}"]`);
+    if (!chip) return;
+    placedCount++;
+    const placed = placedAdverbs[a.word];
+    // allow ±15% tolerance
+    if (Math.abs(placed - a.percent) <= 15) {
+      chip.classList.add('correct-place');
+    } else {
+      chip.classList.add('wrong-place');
+      allCorrect = false;
+    }
+  });
+  if (placedCount < adverbs.length) {
+    fb.className = 'feedback show bad';
+    fb.textContent = `⚠️ Place all ${adverbs.length} adverbs first! / Расставь все ${adverbs.length} наречий!`;
+    return;
+  }
+  if (allCorrect) {
+    fb.className = 'feedback show ok';
+    fb.textContent = '🎉 Excellent! All adverbs are in the right place! / Отлично! Все наречия на своих местах!';
+  } else {
+    fb.className = 'feedback show bad';
+    fb.textContent = '❌ Some positions are wrong. Red ones need to be moved. Click a chip to remove it. / Некоторые позиции неверны. Красные нужно переместить. Кликни на наречие, чтобы убрать.';
+  }
+}
+
+function resetScale() {
+  placedAdverbs = {};
+  scale.querySelectorAll('.adverb-chip.placed').forEach(c => c.remove());
+  document.getElementById('scaleFeedback').className = 'feedback';
+  renderAdverbBank();
+}
+
+renderAdverbBank();
+
+/* Adverb quiz */
+const adverbQuizData = [
+  { percent: '100%', sentence: 'I ___ brush my teeth before bed.', options: ['never', 'sometimes', 'always', 'rarely'], correct: 2 },
+  { percent: '0%', sentence: 'She ___ eats fish — she hates it.', options: ['always', 'never', 'often', 'usually'], correct: 1 },
+  { percent: '50%', sentence: 'We ___ go to the gym — maybe twice a week.', options: ['always', 'never', 'sometimes', 'rarely'], correct: 2 },
+  { percent: '85%', sentence: 'He ___ wakes up early — almost every day.', options: ['never', 'usually', 'rarely', 'sometimes'], correct: 1 }
+];
+
+let aqIndex = 0;
+function renderAdverbQuiz() {
+  const area = document.getElementById('adverbQuiz');
+  if (aqIndex >= adverbQuizData.length) {
+    area.innerHTML = `<div class="question-box" style="background:#e8f5e9;"><h3 style="color:#2e7d32;">✅ Adverb quiz finished! / Тест на наречия завершён!</h3><button class="btn" onclick="aqIndex=0;renderAdverbQuiz();">🔁 Restart</button></div>`;
+    return;
+  }
+  const q = adverbQuizData[aqIndex];
+  area.innerHTML = `
+    <div class="question-box">
+      <div style="font-size:0.9em; color:#764ba2; font-weight:600;">Frequency: ${q.percent}</div>
+      <div class="en-sentence">${q.sentence}</div>
+      <div class="options" id="aqOpts"></div>
+    </div>
+    <div class="feedback" id="aqFb"></div>
+  `;
+  const opts = document.getElementById('aqOpts');
+  q.options.forEach((o, i) => {
+    const b = document.createElement('button');
+    b.className = 'option';
+    b.textContent = o;
+    b.onclick = () => {
+      document.querySelectorAll('#aqOpts .option').forEach(x => x.classList.add('disabled'));
+      if (i === q.correct) {
+        b.classList.add('correct');
+        document.getElementById('aqFb').className = 'feedback show ok';
+        document.getElementById('aqFb').textContent = '✅ Correct!';
+      } else {
+        b.classList.add('wrong');
+        document.querySelectorAll('#aqOpts .option')[q.correct].classList.add('correct');
+        document.getElementById('aqFb').className = 'feedback show bad';
+        document.getElementById('aqFb').textContent = `❌ Correct answer: ${q.options[q.correct]}`;
+      }
+      setTimeout(() => { aqIndex++; renderAdverbQuiz(); }, 1500);
+    };
+    opts.appendChild(b);
+  });
+}
+renderAdverbQuiz();
+
+/* Word order */
+const wordOrderData = [
+  {
+    hint: 'Adverb before main verb / Наречие перед основным глаголом',
+    words: ['always', 'drinks', 'She', 'coffee', '.'],
+    correct: ['She', 'always', 'drinks', 'coffee', '.']
+  },
+  {
+    hint: 'Adverb AFTER "to be" / Наречие ПОСЛЕ "to be"',
+    words: ['happy', 'is', 'He', 'usually', '.'],
+    correct: ['He', 'is', 'usually', 'happy', '.']
+  },
+  {
+    hint: 'Adverb before main verb / Наречие перед основным глаголом',
+    words: ['never', 'eats', 'pizza', 'My', 'brother', '.'],
+    correct: ['My', 'brother', 'never', 'eats', 'pizza', '.']
+  },
+  {
+    hint: 'Adverb AFTER "to be" / Наречие ПОСЛЕ "to be"',
+    words: ['tired', 'often', 'are', 'They', '.'],
+    correct: ['They', 'are', 'often', 'tired', '.']
+  }
+];
+
+let woIndex = 0;
+function renderWordOrder() {
+  const area = document.getElementById('wordOrderArea');
+  if (woIndex >= wordOrderData.length) {
+    area.innerHTML = `<div class="question-box" style="background:#e8f5e9;"><h3 style="color:#2e7d32;">🏆 Word order finished! / Порядок слов — готово!</h3><button class="btn" onclick="woIndex=0;renderWordOrder();">🔁 Restart</button></div>`;
+    return;
+  }
+  const q = wordOrderData[woIndex];
+  const shuffled = [...q.words].sort(() => Math.random() - 0.5);
+  area.innerHTML = `
+    <div class="word-order">
+      <div style="color:#764ba2; font-weight:600; margin-bottom:10px;">💡 ${q.hint}</div>
+      <div class="word-bank" id="woBank"></div>
+      <div style="color:#666; font-size:0.9em; margin-bottom:5px;">Your sentence:</div>
+      <div class="word-slot" id="woSlot"></div>
+      <div style="display:flex; gap:10px;">
+        <button class="btn" onclick="checkWordOrder()">✓ Check</button>
+        <button class="btn secondary" onclick="renderWordOrder()">🔄 Reset</button>
+      </div>
+      <div class="feedback" id="woFb"></div>
+    </div>
+  `;
+  const bank = document.getElementById('woBank');
+  shuffled.forEach((w, i) => {
+    const span = document.createElement('span');
+    span.className = 'word';
+    span.textContent = w;
+    span.dataset.idx = i;
+    span.dataset.word = w;
+    span.onclick = () => moveToSlot(span);
+    bank.appendChild(span);
+  });
+}
+
+function moveToSlot(el) {
+  const slot = document.getElementById('woSlot');
+  if (el.parentElement.id === 'woSlot') {
+    // move back to bank
+    const bank = document.getElementById('woBank');
+    bank.appendChild(el);
+  } else {
+    slot.appendChild(el);
+  }
+}
+
+function checkWordOrder() {
+  const q = wordOrderData[woIndex];
+  const slot = document.getElementById('woSlot');
+  const words = Array.from(slot.children).map(c => c.dataset.word);
+  const fb = document.getElementById('woFb');
+  if (JSON.stringify(words) === JSON.stringify(q.correct)) {
+    fb.className = 'feedback show ok';
+    fb.textContent = '✅ Perfect! / Идеально!';
+    setTimeout(() => { woIndex++; renderWordOrder(); }, 1500);
+  } else {
+    fb.className = 'feedback show bad';
+    fb.textContent = `❌ Try again. Correct: ${q.correct.join(' ')}`;
+  }
+}
+
+renderWordOrder();
+</script>
+</body>
+</html>

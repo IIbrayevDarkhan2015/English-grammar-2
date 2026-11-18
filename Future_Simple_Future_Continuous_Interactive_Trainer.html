@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Future Simple & Future Continuous — Interactive Trainer</title>
+<style>
+:root{--blue:#2457a7;--light:#eef4ff;--ink:#17243b;--green:#16834a;--red:#c0392b;--gold:#f4b942}
+*{box-sizing:border-box}body{margin:0;background:#f4f6fa;color:var(--ink);font:16px/1.55 Arial,sans-serif}
+header{background:linear-gradient(120deg,#183d78,#3977c8);color:white;padding:28px 18px;text-align:center}
+header h1{margin:0 0 8px;font-size:clamp(25px,4vw,38px)}header p{margin:0}
+main{max-width:1100px;margin:22px auto;padding:0 14px}
+nav{display:flex;flex-wrap:wrap;gap:8px;margin:15px 0}
+nav button,.action{border:0;border-radius:9px;padding:11px 15px;background:var(--blue);color:white;font-weight:700;cursor:pointer}
+nav button{background:#dce7f8;color:#183d78}nav button.active{background:var(--blue);color:white}
+.panel{display:none;background:white;border-radius:14px;padding:22px;margin:14px 0;box-shadow:0 3px 14px #142b4d12}
+.panel.active{display:block}.panel h2{color:#1d4f96;margin-top:0}
+h3{color:#244e85;margin-bottom:6px}.rule{background:var(--light);border-left:4px solid var(--blue);padding:13px 16px;border-radius:8px;margin:12px 0}
+table{width:100%;border-collapse:collapse;margin:12px 0}th,td{border:1px solid #d8e0ec;padding:10px;text-align:left;vertical-align:top}th{background:#eaf1fc}
+.example{padding:9px 12px;border-bottom:1px solid #edf0f5}.en{font-weight:700;color:#173f79}.ru{color:#596579}
+.question{padding:14px 0;border-bottom:1px solid #e6ebf2}.question p{margin:0 0 8px}.options{display:flex;flex-wrap:wrap;gap:8px}
+label.opt{display:inline-flex;align-items:center;gap:6px;border:1px solid #d6deeb;border-radius:8px;padding:7px 10px;cursor:pointer;background:#fff}
+label.opt:has(input:checked){background:#eaf1ff;border-color:#5986ca}
+select,button.word{padding:8px;border:1px solid #cbd5e1;border-radius:7px;background:white;color:var(--ink)}
+.wordbank{display:flex;flex-wrap:wrap;gap:7px;margin:8px 0}.word{cursor:pointer}.word.selected{background:#dce9ff;border-color:#3977c8}
+.answerline{min-height:40px;padding:8px;background:#f5f7fb;border:1px dashed #9aabc4;border-radius:8px;margin:8px 0}
+.feedback{font-weight:700;margin-top:8px}.correct{color:var(--green)}.wrong{color:var(--red)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.secondary{background:#5d6b80}
+.score{font-size:18px;font-weight:700;margin:12px 0;padding:12px;background:#edf7f0;border-radius:8px}
+.small{font-size:14px;color:#5d6878}.tag{display:inline-block;background:#e6efff;color:#244e85;border-radius:20px;padding:3px 9px;font-size:13px}
+footer{text-align:center;color:#6b7280;padding:25px}
+@media(max-width:650px){.panel{padding:15px}table{font-size:14px}th,td{padding:7px}}
+</style>
+</head>
+<body>
+<header>
+<h1>Future Simple & Future Continuous</h1>
+<p>Интерактивный грамматический тренажёр • English + Русский</p>
+</header>
+<main>
+<div class="rule"><b>Как работать:</b> изучите правила, затем выполните задания. Нажмите «Проверить», чтобы увидеть результат и объяснение. В заданиях на порядок слов нажимайте слова по очереди.</div>
+<nav id="tabs">
+<button class="active" data-tab="theory">Правила</button>
+<button data-tab="order">1. Порядок слов (20)</button>
+<button data-tab="gaps">2. Вставь глагол (20)</button>
+<button data-tab="matching">3. Matching</button>
+<button data-tab="translation">4. Перевод (20)</button>
+<button data-tab="forms">5. Выбери форму (20)</button>
+</nav>
+
+<section id="theory" class="panel active">
+<h2>1. Future Simple — простое будущее время</h2>
+<p><span class="tag">Decision • prediction • promise</span></p>
+<div class="rule"><b>English rule:</b> We use the Future Simple to talk about actions and events that will happen in the future. We use it for predictions, spontaneous decisions, promises, offers and requests.<br><b>Перевод:</b> Future Simple используется, чтобы говорить о действиях и событиях, которые произойдут в будущем. Это время употребляется для прогнозов, решений, принятых в момент речи, обещаний, предложений помощи и просьб.</div>
+<h3>Формулы / Structures</h3>
+<table><tr><th>Тип предложения</th><th>Формула</th><th>Example / Перевод</th></tr>
+<tr><td>Утверждение (+)</td><td>Subject + will + V1</td><td><span class="en">She will call you.</span><br>Она позвонит тебе.</td></tr>
+<tr><td>Отрицание (−)</td><td>Subject + will not (won't) + V1</td><td><span class="en">They won't be late.</span><br>Они не опоздают.</td></tr>
+<tr><td>Вопрос (?)</td><td>Will + subject + V1?</td><td><span class="en">Will you help me?</span><br>Ты поможешь мне?</td></tr>
+<tr><td>Краткий ответ</td><td>Yes, subject + will. / No, subject + won't.</td><td><span class="en">Yes, I will. / No, I won't.</span><br>Да. / Нет.</td></tr></table>
+<h3>Когда употребляем?</h3>
+<div class="example"><div class="en">1. Prediction: I think it will rain tomorrow.</div><div class="ru">Прогноз: Думаю, завтра будет дождь.</div></div>
+<div class="example"><div class="en">2. Spontaneous decision: The phone is ringing. I'll answer it.</div><div class="ru">Решение в момент речи: Телефон звонит. Я отвечу.</div></div>
+<div class="example"><div class="en">3. Promise: I will always support you.</div><div class="ru">Обещание: Я всегда буду поддерживать тебя.</div></div>
+<div class="example"><div class="en">4. Offer: I'll carry your bag.</div><div class="ru">Предложение помощи: Я понесу твою сумку.</div></div>
+<p><b>Signal words:</b> tomorrow (завтра), next week (на следующей неделе), soon (скоро), one day (однажды в будущем), probably (вероятно), I think (я думаю), I hope (я надеюсь).</p>
+<div class="rule"><b>Важно:</b> после <i>will</i> используется начальная форма глагола (V1), без окончания -s и без частицы to: <b>will go</b>, не <s>will goes</s> и не <s>will to go</s>.</div>
+
+<h2>2. Future Continuous — будущее длительное время</h2>
+<p><span class="tag">Action in progress at a future time</span></p>
+<div class="rule"><b>English rule:</b> We use the Future Continuous to talk about an action that will be in progress at a particular time in the future. It can also describe an expected action or ask politely about someone's plans.<br><b>Перевод:</b> Future Continuous используется, чтобы говорить о действии, которое будет происходить в определённый момент в будущем. Также время может описывать ожидаемое действие или вежливо спрашивать о планах человека.</div>
+<h3>Формулы / Structures</h3>
+<table><tr><th>Тип предложения</th><th>Формула</th><th>Example / Перевод</th></tr>
+<tr><td>Утверждение (+)</td><td>Subject + will be + V-ing</td><td><span class="en">I will be studying at 8.</span><br>В 8 часов я буду заниматься.</td></tr>
+<tr><td>Отрицание (−)</td><td>Subject + will not be + V-ing</td><td><span class="en">He won't be sleeping then.</span><br>В это время он не будет спать.</td></tr>
+<tr><td>Вопрос (?)</td><td>Will + subject + be + V-ing?</td><td><span class="en">Will they be waiting?</span><br>Они будут ждать?</td></tr></table>
+<h3>Когда употребляем?</h3>
+<div class="example"><div class="en">1. At a specific time in the future: This time tomorrow, we will be flying to Astana.</div><div class="ru">В определённый момент в будущем: Завтра в это время мы будем лететь в Астану.</div></div>
+<div class="example"><div class="en">2. An action in progress: At 7 p.m. she will be cooking dinner.</div><div class="ru">Действие будет в процессе: В 7 вечера она будет готовить ужин.</div></div>
+<div class="example"><div class="en">3. Polite question about plans: Will you be using the computer tonight?</div><div class="ru">Вежливый вопрос о планах: Ты будешь пользоваться компьютером сегодня вечером?</div></div>
+<p><b>Signal words:</b> at 5 o'clock tomorrow (завтра в 5), this time tomorrow (завтра в это время), at this time next week (в это время на следующей неделе), all day tomorrow (весь день завтра).</p>
+<div class="rule"><b>Правописание -ing:</b> work → working; make → making (убираем немую -e); run → running (удваиваем согласную в коротком ударном слоге).</div>
+
+<h2>3. Future Simple или Future Continuous?</h2>
+<table><tr><th>Future Simple</th><th>Future Continuous</th></tr>
+<tr><td>Факт, решение, обещание или прогноз о будущем.</td><td>Действие будет происходить в конкретный момент будущего.</td></tr>
+<tr><td><span class="en">I will read the report tomorrow.</span><br>Я прочитаю отчёт завтра.</td><td><span class="en">I will be reading the report at 10.</span><br>В 10 я буду читать отчёт.</td></tr>
+<tr><td>will + V1</td><td>will be + V-ing</td></tr></table>
+<p><b>Сравните:</b> <span class="en">At 9, I will start work.</span> — В 9 я начну работу (событие). <span class="en">At 9, I will be working.</span> — В 9 я буду работать (процесс).</p>
+</section>
+
+<section id="order" class="panel">
+<h2>1. Put the words in the correct order</h2><p>Нажимайте слова в правильной последовательности. Чтобы начать заново, нажмите «Очистить».</p>
+<div id="orderList"></div><div class="actions"><button class="action" onclick="checkOrder()">Проверить</button><button class="action secondary" onclick="resetOrder()">Очистить</button></div><div id="orderScore" class="score" hidden></div>
+</section>
+<section id="gaps" class="panel">
+<h2>2. Complete the sentences</h2><p>Выберите правильную форму глагола.</p><div id="gapList"></div><div class="actions"><button class="action" onclick="checkMC('gap')">Проверить</button><button class="action secondary" onclick="resetMC('gap')">Сбросить</button></div><div id="gapScore" class="score" hidden></div>
+</section>
+<section id="matching" class="panel">
+<h2>3. Matching — match the formula and the rule</h2><p>Соедините формулу с соответствующим правилом. Выберите вариант в каждом списке.</p><div id="matchList"></div><div class="actions"><button class="action" onclick="checkMatch()">Проверить</button><button class="action secondary" onclick="buildMatch()">Сбросить</button></div><div id="matchScore" class="score" hidden></div>
+</section>
+<section id="translation" class="panel">
+<h2>4. Choose the correct translation</h2><p>Выберите правильный перевод английского предложения.</p><div id="translationList"></div><div class="actions"><button class="action" onclick="checkMC('translation')">Проверить</button><button class="action secondary" onclick="resetMC('translation')">Сбросить</button></div><div id="translationScore" class="score" hidden></div>
+</section>
+<section id="forms" class="panel">
+<h2>5. Choose the correct tense form</h2><p>Выберите подходящую форму: Future Simple или Future Continuous.</p><div id="formList"></div><div class="actions"><button class="action" onclick="checkMC('form')">Проверить</button><button class="action secondary" onclick="resetMC('form')">Сбросить</button></div><div id="formScore" class="score" hidden></div>
+</section>
+</main>
+<footer>English Grammar Trainer • Future Simple & Future Continuous</footer>
+<script>
+const orderData=[
+["I / will / visit / my grandparents / tomorrow","I will visit my grandparents tomorrow."],
+["She / will / be / studying / at 6 p.m.","She will be studying at 6 p.m."],
+["They / won't / forget / your birthday","They won't forget your birthday."],
+["Will / you / be / working / this evening / ?","Will you be working this evening?"],
+["We / will / travel / to Almaty / next week","We will travel to Almaty next week."],
+["He / will / be / repairing / the car / at noon","He will be repairing the car at noon."],
+["I / think / it / will / snow / tomorrow","I think it will snow tomorrow."],
+["The students / will / be / taking / a test / at 10","The students will be taking a test at 10."],
+["Will / she / call / us / later / ?","Will she call us later?"],
+["My father / will / not / be / driving / tonight","My father will not be driving tonight."],
+["We / will / help / you / with the project","We will help you with the project."],
+["At this time tomorrow / I / will / be / flying / home","At this time tomorrow I will be flying home."],
+["He / will / probably / pass / the exam","He will probably pass the exam."],
+["What / will / you / be / doing / at 8 / ?","What will you be doing at 8?"],
+["They / will / be / waiting / for the bus","They will be waiting for the bus."],
+["I / won't / be / using / the laptop / tomorrow","I won't be using the laptop tomorrow."],
+["Our teacher / will / explain / the rule","Our teacher will explain the rule."],
+["The mechanic / will / be / checking / the engine / at 9","The mechanic will be checking the engine at 9."],
+["Will / it / rain / next weekend / ?","Will it rain next weekend?"],
+["This time next year / she / will / be / studying / at college","This time next year she will be studying at college."]
+];
+const gapData=[
+["I think our team ___ the match tomorrow.",["will win","will be winning","wins"],0,"Прогноз: Future Simple — will + V1."],
+["At 8 p.m. tomorrow, I ___ my homework.",["will do","will be doing","do"],1,"Действие будет в процессе в 8 часов: will be + V-ing."],
+["Don't worry, I ___ you.",["will help","will be helping","helping"],0,"Обещание/решение: will + V1."],
+["This time next Monday, they ___ to London.",["will fly","will be flying","flew"],1,"This time next Monday указывает на процесс в конкретный момент."],
+["She ___ the car tomorrow.",["will repairs","will repair","will be repair"],1,"После will используется V1: repair."],
+["At midnight, we ___ .",["will sleep","will be sleeping","are sleep"],1,"В полночь действие будет продолжаться."],
+["I am thirsty. I ___ some water.",["will get","will be getting","gets"],0,"Спонтанное решение: I'll get."],
+["At 10 tomorrow, the mechanic ___ the brakes.",["will check","will be checking","checks"],1,"Процесс в определённое время: will be checking."],
+["They ___ us next weekend.",["will visit","will be visit","visits"],0,"Обычное сообщение о будущем: will + V1."],
+["At this time tomorrow, he ___ for his exam.",["will prepare","will be preparing","prepares"],1,"At this time tomorrow — Future Continuous."],
+["I promise I ___ anyone your secret.",["won't tell","won't be telling","not tell"],0,"Обещание: won't + V1."],
+["___ you be using the computer at 7?",["Will","Do","Are"],0,"Вопрос Future Continuous: Will + subject + be + V-ing?"],
+["We ___ a new lesson next week.",["will start","will be start","starts"],0,"Будущее событие: will start."],
+["At 6 p.m. she ___ dinner.",["will cook","will be cooking","cooks"],1,"Действие будет происходить в 6 вечера."],
+["He ___ late, I think.",["will not be","will not being","isn't be"],0,"Прогноз: will not + V1."],
+["At 9 tomorrow, I ___ to college.",["will go","will be going","go"],1,"В 9 завтра я буду находиться в процессе поездки."],
+["The phone is ringing. I ___ it.",["will answer","will be answering","answering"],0,"Решение принято в момент речи."],
+["They ___ football all afternoon tomorrow.",["will play","will be playing","will playing"],1,"Длительное действие в течение периода будущего."],
+["She ___ you when she arrives.",["will call","will be call","calls"],0,"Будущее действие: will call."],
+["At noon, the students ___ an English test.",["will write","will be writing","will writes"],1,"В полдень процесс будет продолжаться."]
+];
+const translationData=[
+["I will call you tomorrow.",["Я позвоню тебе завтра.","Я звоню тебе сейчас.","Я звонил тебе вчера."],0],
+["She will be working at 5 p.m.",["Она работает каждый день.","В 5 вечера она будет работать.","Она уже закончила работу."],1],
+["They won't come to the party.",["Они не пришли на вечеринку.","Они не приходят на вечеринки.","Они не придут на вечеринку."],2],
+["Will you be waiting for me?",["Ты будешь ждать меня?","Ты ждёшь меня сейчас?","Ты подождал меня?"],0],
+["We will buy a new computer.",["Мы купили новый компьютер.","Мы будем покупать компьютер прямо сейчас.","Мы купим новый компьютер."],2],
+["At this time tomorrow, he will be driving.",["Завтра в это время он будет за рулём.","Завтра он водил машину.","Он водит машину каждый день."],0],
+["I think it will be cold.",["Я думаю, холодно сейчас.","Я думаю, будет холодно.","Я думал, было холодно."],1],
+["She won't be studying tonight.",["Она не будет заниматься сегодня вечером.","Она не занималась вчера вечером.","Она не занимается сейчас."],0],
+["Will they help us?",["Они помогли нам?","Они помогают нам?","Они помогут нам?"],2],
+["At 7, we will be having dinner.",["В 7 мы будем ужинать.","В 7 мы поужинали.","Мы ужинаем в 7 каждый день."],0],
+["He will repair the engine.",["Он ремонтирует двигатель сейчас.","Он отремонтирует двигатель.","Он ремонтировал двигатель."],1],
+["This time next week, I will be relaxing.",["На следующей неделе я отдыхал.","В это время на следующей неделе я буду отдыхать.","Я отдыхаю каждую неделю."],1],
+["I will always remember you.",["Я всегда буду помнить тебя.","Я всегда помнил тебя.","Я помню тебя сейчас."],0],
+["Will she be travelling tomorrow?",["Она путешествовала вчера?","Она путешествует каждый день?","Она будет путешествовать завтра?"],2],
+["They will probably win.",["Возможно, они выиграют.","Они уже выиграли.","Они обычно выигрывают."],0],
+["At 10, the workers will be painting the walls.",["В 10 рабочие покрасили стены.","В 10 рабочие будут красить стены.","Рабочие красят стены каждый день."],1],
+["I won't forget this day.",["Я не забуду этот день.","Я не забывал этот день.","Я не забываю этот день сейчас."],0],
+["What will you be doing at 9?",["Что ты сделал в 9?","Что ты делаешь обычно в 9?","Что ты будешь делать в 9?"],2],
+["He will send the email later.",["Он отправил письмо раньше.","Он отправит электронное письмо позже.","Он отправляет письмо сейчас."],1],
+["At midnight, they will be sleeping.",["В полночь они будут спать.","В полночь они проснулись.","Они спят каждую ночь."],0]
+];
+const formData=[
+["I promise I ___ you with your project.",["will help","will be helping"],0,"Обещание — Future Simple."],
+["At 8 tomorrow, we ___ a film.",["will watch","will be watching"],1,"Действие в процессе в конкретное время — Future Continuous."],
+["I think people ___ on Mars one day.",["will live","will be living"],0,"Общий прогноз — Future Simple."],
+["This time tomorrow, she ___ to Astana.",["will travel","will be travelling"],1,"В это время завтра — процесс."],
+["The doorbell is ringing. I ___ it.",["will open","will be opening"],0,"Спонтанное решение — Future Simple."],
+["At 11 a.m. the students ___ an exam.",["will take","will be taking"],1,"Действие будет происходить в 11."],
+["He ___ you later, don't worry.",["will call","will be calling"],0,"Обещание/будущее действие."],
+["At this time next month, I ___ in a new office.",["will work","will be working"],1,"Процесс в определённый будущий момент."],
+["Maybe our teacher ___ us extra homework.",["will give","will be giving"],0,"Предположение/прогноз."],
+["At 6 p.m. tomorrow, Dad ___ the car.",["will wash","will be washing"],1,"Действие будет в процессе в 6."],
+["I am sure you ___ the competition.",["will win","will be winning"],0,"Прогноз с I am sure."],
+["At midnight, they ___ home.",["will drive","will be driving"],1,"В полночь действие будет продолжаться."],
+["We ___ a new topic next lesson.",["will study","will be studying"],0,"Будущее событие."],
+["At 9 tomorrow morning, he ___ to work.",["will go","will be going"],1,"Процесс в конкретное время."],
+["I ___ you the truth, I promise.",["will tell","will be telling"],0,"Обещание."],
+["All afternoon tomorrow, she ___ for her test.",["will prepare","will be preparing"],1,"Длительный процесс в течение периода."],
+["I think the weather ___ better soon.",["will get","will be getting"],0,"Прогноз."],
+["At 7, the mechanic ___ the engine.",["will examine","will be examining"],1,"В 7 осмотр будет происходить."],
+["They ___ us next Sunday.",["will visit","will be visiting"],0,"Простое сообщение о будущем."],
+["This time next year, we ___ at college.",["will study","will be studying"],1,"Действие будет в процессе в этот момент."]
+];
+const matchData=[
+["will + V1","Утвердительная форма Future Simple"],
+["will not (won't) + V1","Отрицательная форма Future Simple"],
+["Will + subject + V1?","Вопросительная форма Future Simple"],
+["will be + V-ing","Утвердительная форма Future Continuous"],
+["will not be + V-ing","Отрицательная форма Future Continuous"],
+["Will + subject + be + V-ing?","Вопросительная форма Future Continuous"]
+];
+const $=id=>document.getElementById(id);
+document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));document.querySelectorAll(".panel").forEach(x=>x.classList.remove("active"));b.classList.add("active");$(b.dataset.tab).classList.add("active")}));
+function shuffle(a){return [...a].sort(()=>Math.random()-.5)}
+let orderAnswers={};
+function buildOrder(){orderData.forEach((q,i)=>{let words=shuffle(q[0].split(" / "));orderAnswers[i]=[];let d=document.createElement("div");d.className="question";d.innerHTML=`<p><b>${i+1}.</b> Составьте предложение:</p><div class="wordbank" id="bank${i}"></div><div class="answerline" id="line${i}">Ваше предложение появится здесь…</div><div class="small" id="ofb${i}"></div>`; $("orderList").append(d);words.forEach(w=>{let b=document.createElement("button");b.className="word";b.textContent=w;b.onclick=()=>{if(b.disabled)return;b.disabled=true;orderAnswers[i].push(w);$("line"+i).textContent=orderAnswers[i].join(" ");};$("bank"+i).append(b)})})}
+function checkOrder(){let score=0;orderData.forEach((q,i)=>{let got=orderAnswers[i].join(" ").replace(/\s+([?.!,])/g,"$1").toLowerCase();let ans=q[1].toLowerCase();let ok=got===ans;if(ok)score++;$("ofb"+i).innerHTML=`<span class="${ok?'correct':'wrong'}">${ok?'Верно!':'Правильный ответ: '+q[1]}</span>`});$("orderScore").hidden=false;$("orderScore").textContent=`Результат: ${score} / 20`;}
+function resetOrder(){$("orderList").innerHTML="";$("orderScore").hidden=true;orderAnswers={};buildOrder()}
+function renderMC(type,data){let root=$(type+"List");root.innerHTML="";data.forEach((q,i)=>{let d=document.createElement("div");d.className="question";let options=q[1].map((o,j)=>`<label class="opt"><input type="radio" name="${type}${i}" value="${j}"> ${o}</label>`).join("");d.innerHTML=`<p><b>${i+1}.</b> ${q[0]}</p><div class="options">${options}</div><div class="small" id="${type}fb${i}"></div>`;root.append(d)})}
+function checkMC(type){let data=type==="gap"?gapData:type==="translation"?translationData:formData,score=0;data.forEach((q,i)=>{let sel=document.querySelector(`input[name="${type}${i}"]:checked`);let ok=!!sel&&Number(sel.value)===q[2];if(ok)score++;let expl=q[3]||"Правильный перевод.";$(type+"fb"+i).innerHTML=`<span class="${ok?'correct':'wrong'}">${ok?'Верно!':'Неверно. Правильный ответ: '+q[1][q[2]]}</span> <span>${expl}</span>`});$(type+"Score").hidden=false;$(type+"Score").textContent=`Результат: ${score} / 20`;}
+function resetMC(type){let data=type==="gap"?gapData:type==="translation"?translationData:formData;renderMC(type,data);$(type+"Score").hidden=true}
+function buildMatch(){let root=$("matchList");root.innerHTML="";let rules=matchData.map(x=>x[1]);matchData.forEach((q,i)=>{let d=document.createElement("div");d.className="question";let opts=shuffle(rules).map(r=>`<option value="${rules.indexOf(r)}">${r}</option>`).join("");d.innerHTML=`<p><b>${i+1}.</b> <span class="en">${q[0]}</span></p><select id="m${i}"><option value="">— Выберите правило —</option>${opts}</select> <span id="mfb${i}" class="small"></span>`;root.append(d)});$("matchScore").hidden=true}
+function checkMatch(){let score=0;matchData.forEach((q,i)=>{let ok=Number($("m"+i).value)===i;if(ok)score++;$("mfb"+i).innerHTML=`<span class="${ok?'correct':'wrong'}">${ok?'Верно!':'Правильно: '+q[1]}</span>`});$("matchScore").hidden=false;$("matchScore").textContent=`Результат: ${score} / 6`;}
+buildOrder();renderMC("gap",gapData);renderMC("translation",translationData);renderMC("form",formData);buildMatch();
+</script>
+</body></html>

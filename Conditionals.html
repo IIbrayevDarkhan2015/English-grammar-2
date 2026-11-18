@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Conditionals Trainer / Тренажёр по условным предложениям</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #333;
+  }
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    overflow: hidden;
+  }
+  header {
+    background: linear-gradient(135deg, #4a5fc1 0%, #5e3a87 100%);
+    color: #fff;
+    padding: 30px;
+    text-align: center;
+  }
+  header h1 { font-size: 2em; margin-bottom: 8px; }
+  header p { opacity: 0.9; }
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    background: #f5f5fa;
+    border-bottom: 2px solid #e0e0e8;
+  }
+  nav button {
+    flex: 1;
+    min-width: 150px;
+    padding: 15px 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    color: #555;
+    transition: all 0.3s;
+    border-bottom: 3px solid transparent;
+  }
+  nav button:hover { background: #ebebf5; }
+  nav button.active {
+    color: #4a5fc1;
+    border-bottom-color: #4a5fc1;
+    background: #fff;
+  }
+  .section { display: none; padding: 30px; }
+  .section.active { display: block; animation: fadeIn 0.4s; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px);} to { opacity: 1; transform: translateY(0);} }
+
+  h2 { color: #4a5fc1; margin-bottom: 15px; }
+  h3 { color: #5e3a87; margin: 20px 0 10px; }
+  .rule-card {
+    background: #f9f9ff;
+    border-left: 5px solid #4a5fc1;
+    padding: 20px;
+    margin: 15px 0;
+    border-radius: 10px;
+  }
+  .formula {
+    background: #4a5fc1;
+    color: #fff;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-family: 'Courier New', monospace;
+    font-size: 16px;
+    margin: 10px 0;
+    display: inline-block;
+  }
+  .example {
+    background: #fff;
+    border: 1px dashed #4a5fc1;
+    padding: 12px 18px;
+    margin: 8px 0;
+    border-radius: 8px;
+  }
+  .example .en { font-weight: 600; color: #222; }
+  .example .ru { color: #666; font-style: italic; margin-top: 4px; }
+  .translate { color: #555; margin: 8px 0; line-height: 1.6; }
+
+  .question {
+    background: #f9f9ff;
+    padding: 18px;
+    margin: 12px 0;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    transition: border-color 0.3s;
+  }
+  .question.correct { border-color: #4caf50; background: #e8f5e9; }
+  .question.wrong { border-color: #f44336; background: #ffebee; }
+  .question p { margin-bottom: 10px; font-size: 16px; }
+  .options label {
+    display: block;
+    padding: 10px 15px;
+    margin: 5px 0;
+    background: #fff;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .options label:hover { border-color: #4a5fc1; background: #f0f0ff; }
+  .options input { margin-right: 10px; }
+  .options label.selected { border-color: #4a5fc1; background: #e8eaff; }
+
+  button.action {
+    background: linear-gradient(135deg, #4a5fc1, #5e3a87);
+    color: #fff;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 15px;
+    transition: transform 0.2s;
+  }
+  button.action:hover { transform: translateY(-2px); }
+  .result {
+    margin-top: 20px;
+    padding: 20px;
+    background: linear-gradient(135deg, #4caf50, #2e7d32);
+    color: #fff;
+    border-radius: 10px;
+    font-size: 18px;
+    text-align: center;
+    display: none;
+  }
+  .result.show { display: block; animation: fadeIn 0.4s; }
+
+  /* Matching */
+  .match-container { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 20px 0; }
+  .match-col h4 { text-align: center; margin-bottom: 10px; color: #4a5fc1; }
+  .match-item {
+    background: #fff;
+    border: 2px solid #4a5fc1;
+    padding: 12px;
+    border-radius: 8px;
+    margin: 8px 0;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    font-size: 14px;
+  }
+  .match-item:hover { background: #f0f0ff; }
+  .match-item.selected { background: #4a5fc1; color: #fff; }
+  .match-item.matched { background: #4caf50; color: #fff; cursor: default; }
+  .match-item.wrong-match { background: #f44336; color: #fff; }
+
+  select.match-select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    border: 2px solid #4a5fc1;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+
+  @media (max-width: 700px) {
+    .match-container { grid-template-columns: 1fr; }
+    header h1 { font-size: 1.4em; }
+    nav button { font-size: 13px; padding: 10px 5px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>📘 Conditionals / Условные предложения</h1>
+    <p>Интерактивный тренажёр / Interactive Trainer</p>
+  </header>
+
+  <nav>
+    <button class="tab-btn active" data-tab="theory">📖 Теория</button>
+    <button class="tab-btn" data-tab="fill">✏️ Вставь глагол</button>
+    <button class="tab-btn" data-tab="match">🔗 Matching</button>
+    <button class="tab-btn" data-tab="translate">🌍 Перевод</button>
+    <button class="tab-btn" data-tab="choose">🎯 Выбери форму</button>
+  </nav>
+
+  <!-- ТЕОРИЯ -->
+  <div id="theory" class="section active">
+    <h2>Условные предложения (Conditionals)</h2>
+    <p class="translate">Условные предложения (Conditionals) — это предложения, которые описывают условие и его результат. Они состоят из двух частей: <b>if-clause</b> (придаточное условия) и <b>main clause</b> (главное предложение).</p>
+
+    <div class="rule-card">
+      <h3>🟢 Zero Conditional / Нулевой тип</h3>
+      <p><b>Использование / Use:</b> Для общих истин, научных фактов, законов природы, регулярных действий. / For general truths, scientific facts, laws of nature, regular actions.</p>
+      <div class="formula">If + Present Simple, Present Simple</div>
+      <div class="example">
+        <div class="en">If you heat ice, it melts.</div>
+        <div class="ru">Если нагреть лёд, он тает.</div>
+      </div>
+      <div class="example">
+        <div class="en">If it rains, the ground gets wet.</div>
+        <div class="ru">Если идёт дождь, земля становится мокрой.</div>
+      </div>
+    </div>
+
+    <div class="rule-card">
+      <h3>🔵 First Conditional / Первый тип</h3>
+      <p><b>Использование / Use:</b> Для реальных и вероятных ситуаций в настоящем или будущем. / For real and probable situations in the present or future.</p>
+      <div class="formula">If + Present Simple, will + V (infinitive)</div>
+      <div class="example">
+        <div class="en">If it rains tomorrow, I will stay at home.</div>
+        <div class="ru">Если завтра пойдёт дождь, я останусь дома.</div>
+      </div>
+      <div class="example">
+        <div class="en">If you study hard, you will pass the exam.</div>
+        <div class="ru">Если ты будешь усердно учиться, ты сдашь экзамен.</div>
+      </div>
+    </div>
+
+    <div class="rule-card">
+      <h3>🟡 Second Conditional / Второй тип</h3>
+      <p><b>Использование / Use:</b> Для нереальных или маловероятных ситуаций в настоящем или будущем; для советов. / For unreal or improbable situations in the present or future; for advice.</p>
+      <div class="formula">If + Past Simple, would + V (infinitive)</div>
+      <div class="example">
+        <div class="en">If I had a million dollars, I would buy a house.</div>
+        <div class="ru">Если бы у меня был миллион долларов, я бы купил дом.</div>
+      </div>
+      <div class="example">
+        <div class="en">If I were you, I would apologize.</div>
+        <div class="ru">Если бы я был на твоём месте, я бы извинился.</div>
+      </div>
+      <p class="translate"><b>Важно:</b> В условной части после <i>if</i> для всех лиц используется <b>were</b> (а не was). / <b>Important:</b> In the if-clause we use <b>were</b> for all persons (not was).</p>
+    </div>
+
+    <div class="rule-card">
+      <h3>🔴 Third Conditional / Третий тип</h3>
+      <p><b>Использование / Use:</b> Для нереальных ситуаций в прошлом; сожаления о том, что нельзя изменить. / For unreal situations in the past; regrets about things that cannot be changed.</p>
+      <div class="formula">If + Past Perfect (had + V3), would have + V3</div>
+      <div class="example">
+        <div class="en">If I had studied harder, I would have passed the exam.</div>
+        <div class="ru">Если бы я учился усерднее, я бы сдал экзамен.</div>
+      </div>
+      <div class="example">
+        <div class="en">If she had called me, I would have come.</div>
+        <div class="ru">Если бы она мне позвонила, я бы пришёл.</div>
+      </div>
+    </div>
+
+    <div class="rule-card">
+      <h3>📌 Сводная таблица / Summary Table</h3>
+      <table style="width:100%; border-collapse: collapse; margin-top: 10px;">
+        <tr style="background:#4a5fc1; color:#fff;">
+          <th style="padding:10px;">Тип / Type</th>
+          <th style="padding:10px;">If-clause</th>
+          <th style="padding:10px;">Main clause</th>
+          <th style="padding:10px;">Когда / When</th>
+        </tr>
+        <tr style="background:#f9f9ff;">
+          <td style="padding:10px;">Zero</td>
+          <td style="padding:10px;">Present Simple</td>
+          <td style="padding:10px;">Present Simple</td>
+          <td style="padding:10px;">Всегда / Always true</td>
+        </tr>
+        <tr>
+          <td style="padding:10px;">First</td>
+          <td style="padding:10px;">Present Simple</td>
+          <td style="padding:10px;">will + V</td>
+          <td style="padding:10px;">Реальное будущее / Real future</td>
+        </tr>
+        <tr style="background:#f9f9ff;">
+          <td style="padding:10px;">Second</td>
+          <td style="padding:10px;">Past Simple</td>
+          <td style="padding:10px;">would + V</td>
+          <td style="padding:10px;">Нереальное настоящее / Unreal present</td>
+        </tr>
+        <tr>
+          <td style="padding:10px;">Third</td>
+          <td style="padding:10px;">Past Perfect</td>
+          <td style="padding:10px;">would have + V3</td>
+          <td style="padding:10px;">Нереальное прошлое / Unreal past</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- УПРАЖНЕНИЕ 1: ВСТАВЬ ГЛАГОЛ -->
+  <div id="fill" class="section">
+    <h2>✏️ Exercise 1: Put in the correct form of the verb / Вставь правильную форму глагола</h2>
+    <p class="translate">Выберите правильный вариант глагола для каждого предложения. / Choose the correct verb form for each sentence.</p>
+    <div id="fill-questions"></div>
+    <button class="action" onclick="checkFill()">Проверить / Check</button>
+    <div id="fill-result" class="result"></div>
+  </div>
+
+  <!-- УПРАЖНЕНИЕ 2: MATCHING -->
+  <div id="match" class="section">
+    <h2>🔗 Exercise 2: Match the formula with the rule / Соедини формулу с правилом</h2>
+    <p class="translate">Для каждой формулы выбери правильное описание из списка. / For each formula choose the correct description from the list.</p>
+    <div id="match-questions"></div>
+    <button class="action" onclick="checkMatch()">Проверить / Check</button>
+    <div id="match-result" class="result"></div>
+  </div>
+
+  <!-- УПРАЖНЕНИЕ 3: ПЕРЕВОД -->
+  <div id="translate" class="section">
+    <h2>🌍 Exercise 3: Choose the correct translation / Выбери правильный перевод</h2>
+    <p class="translate">Прочитайте английское предложение и выберите правильный вариант перевода на русский. / Read the English sentence and choose the correct Russian translation.</p>
+    <div id="translate-questions"></div>
+    <button class="action" onclick="checkTranslate()">Проверить / Check</button>
+    <div id="translate-result" class="result"></div>
+  </div>
+
+  <!-- УПРАЖНЕНИЕ 4: ВЫБЕРИ ФОРМУ -->
+  <div id="choose" class="section">
+    <h2>🎯 Exercise 4: Choose the correct conditional type / Выбери правильный тип условного предложения</h2>
+    <p class="translate">Определите, какой тип Conditional используется в каждом предложении. / Identify which type of Conditional is used in each sentence.</p>
+    <div id="choose-questions"></div>
+    <button class="action" onclick="checkChoose()">Проверить / Check</button>
+    <div id="choose-result" class="result"></div>
+  </div>
+</div>
+
+<script>
+// === НАВИГАЦИЯ ===
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+  });
+});
+
+// === ДАННЫЕ ===
+
+// Упражнение 1: Вставь глагол
+const fillData = [
+  { q: "If it ___ tomorrow, we will cancel the picnic.", opts: ["rains", "will rain", "rained", "would rain"], correct: 0 },
+  { q: "If I ___ you, I would accept the offer.", opts: ["am", "was", "were", "would be"], correct: 2 },
+  { q: "If she had studied harder, she ___ the exam.", opts: ["will pass", "would pass", "would have passed", "passes"], correct: 2 },
+  { q: "If you heat water to 100°C, it ___.", opts: ["will boil", "boils", "would boil", "boiled"], correct: 1 },
+  { q: "If he ___ time, he would travel around the world.", opts: ["has", "had", "would have", "has had"], correct: 1 },
+  { q: "If they ___ early, they will catch the train.", opts: ["leave", "will leave", "left", "would leave"], correct: 0 },
+  { q: "If I ___ about the party, I would have come.", opts: ["know", "knew", "had known", "would know"], correct: 2 },
+  { q: "When the sun ___, it gets dark.", opts: ["will set", "sets", "set", "would set"], correct: 1 },
+  { q: "If I won the lottery, I ___ a big house.", opts: ["will buy", "would buy", "buy", "had bought"], correct: 1 },
+  { q: "If you ___ me, please call me back.", opts: ["will need", "need", "needed", "would need"], correct: 1 }
+];
+
+// Упражнение 2: Matching - формула и правило
+const matchData = [
+  { formula: "If + Present Simple, Present Simple", rule: "Zero Conditional — общие истины, факты / general truths, facts" },
+  { formula: "If + Present Simple, will + V", rule: "First Conditional — реальное будущее / real future" },
+  { formula: "If + Past Simple, would + V", rule: "Second Conditional — нереальное настоящее / unreal present" },
+  { formula: "If + Past Perfect, would have + V3", rule: "Third Conditional — нереальное прошлое / unreal past" }
+];
+const wrongRules = [
+  "Past Conditional — для привычек в прошлом / for past habits",
+  "Mixed Conditional — смесь времён / mix of tenses",
+  "Zero Conditional — сожаления о прошлом / regrets about the past"
+];
+
+// Упражнение 3: Перевод
+const translateData = [
+  { en: "If you freeze water, it becomes ice.", opts: [
+    "Если ты заморозишь воду, она станет льдом.",
+    "Если заморозить воду, она становится льдом.",
+    "Если бы ты заморозил воду, она стала бы льдом."
+  ], correct: 1 },
+  { en: "If it rains, I will take an umbrella.", opts: [
+    "Если бы шёл дождь, я бы взял зонт.",
+    "Если пойдёт дождь, я возьму зонт.",
+    "Если идёт дождь, я беру зонт."
+  ], correct: 1 },
+  { en: "If I were rich, I would travel the world.", opts: [
+    "Если я богат, я путешествую по миру.",
+    "Если я буду богатым, я буду путешествовать по миру.",
+    "Если бы я был богат, я бы путешествовал по миру."
+  ], correct: 2 },
+  { en: "If she had known, she would have helped.", opts: [
+    "Если бы она знала, она бы помогла.",
+    "Если она знает, она поможет.",
+    "Если она будет знать, она поможет."
+  ], correct: 0 },
+  { en: "If you mix red and blue, you get purple.", opts: [
+    "Если смешать красный и синий, получится фиолетовый.",
+    "Если бы ты смешал красный и синий, получился бы фиолетовый.",
+    "Если ты смешаешь красный и синий, ты получишь фиолетовый."
+  ], correct: 0 },
+  { en: "If I had more time, I would learn Japanese.", opts: [
+    "Если у меня будет больше времени, я выучу японский.",
+    "Если бы у меня было больше времени, я бы выучил японский.",
+    "Если у меня есть время, я учу японский."
+  ], correct: 1 },
+  { en: "If we leave now, we will be on time.", opts: [
+    "Если мы уйдём сейчас, мы успеем вовремя.",
+    "Если бы мы ушли сейчас, мы бы успели вовремя.",
+    "Если мы уходим сейчас, мы успеваем вовремя."
+  ], correct: 0 },
+  { en: "If I had seen him, I would have said hello.", opts: [
+    "Если я увижу его, я поздороваюсь.",
+    "Если бы я увидел его, я бы поздоровался.",
+    "Если я вижу его, я здороваюсь."
+  ], correct: 1 },
+  { en: "If you press this button, the machine starts.", opts: [
+    "Если ты нажмёшь эту кнопку, машина запустится.",
+    "Если бы ты нажал эту кнопку, машина бы запустилась.",
+    "Если нажать эту кнопку, машина запускается."
+  ], correct: 2 },
+  { en: "If they had invited me, I would have gone.", opts: [
+    "Если они пригласят меня, я пойду.",
+    "Если бы они пригласили меня, я бы пошёл.",
+    "Если они приглашают меня, я иду."
+  ], correct: 1 }
+];
+
+// Упражнение 4: Выбери тип Conditional
+const chooseData = [
+  { q: "If you study, you will pass.", opts: ["Zero", "First", "Second", "Third"], correct: 1 },
+  { q: "If I were a bird, I would fly.", opts: ["Zero", "First", "Second", "Third"], correct: 2 },
+  { q: "If I had known, I would have told you.", opts: ["Zero", "First", "Second", "Third"], correct: 3 },
+  { q: "If you heat ice, it melts.", opts: ["Zero", "First", "Second", "Third"], correct: 0 },
+  { q: "If she comes, I will help her.", opts: ["Zero", "First", "Second", "Third"], correct: 1 },
+  { q: "If he had money, he would buy a car.", opts: ["Zero", "First", "Second", "Third"], correct: 2 },
+  { q: "If they had left earlier, they wouldn't have missed the train.", opts: ["Zero", "First", "Second", "Third"], correct: 3 },
+  { q: "Water boils if you heat it to 100°C.", opts: ["Zero", "First", "Second", "Third"], correct: 0 },
+  { q: "If I won the lottery, I would buy a yacht.", opts: ["Zero", "First", "Second", "Third"], correct: 2 },
+  { q: "If it snows tomorrow, we will build a snowman.", opts: ["Zero", "First", "Second", "Third"], correct: 1 }
+];
+
+// === РЕНДЕР УПРАЖНЕНИЙ ===
+
+function renderFill() {
+  const cont = document.getElementById('fill-questions');
+  cont.innerHTML = fillData.map((item, i) => `
+    <div class="question" id="fill-q-${i}">
+      <p><b>${i+1}.</b> ${item.q}</p>
+      <div class="options">
+        ${item.opts.map((opt, j) => `
+          <label><input type="radio" name="fill-${i}" value="${j}"> ${opt}</label>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderMatch() {
+  const cont = document.getElementById('match-questions');
+  const allRules = [...matchData.map(m => m.rule), ...wrongRules].sort(() => Math.random() - 0.5);
+  cont.innerHTML = matchData.map((item, i) => `
+    <div class="question" id="match-q-${i}">
+      <p><b>${i+1}.</b> <span class="formula">${item.formula}</span></p>
+      <select class="match-select" data-correct="${matchData.indexOf(item)}">
+        <option value="">-- Выбери правило / Choose the rule --</option>
+        ${allRules.map((r, idx) => `<option value="${idx}">${r}</option>`).join('')}
+      </select>
+    </div>
+  `).join('');
+}
+
+function renderTranslate() {
+  const cont = document.getElementById('translate-questions');
+  cont.innerHTML = translateData.map((item, i) => `
+    <div class="question" id="tr-q-${i}">
+      <p><b>${i+1}.</b> <i>${item.en}</i></p>
+      <div class="options">
+        ${item.opts.map((opt, j) => `
+          <label><input type="radio" name="tr-${i}" value="${j}"> ${opt}</label>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderChoose() {
+  const cont = document.getElementById('choose-questions');
+  cont.innerHTML = chooseData.map((item, i) => `
+    <div class="question" id="ch-q-${i}">
+      <p><b>${i+1}.</b> <i>${item.q}</i></p>
+      <div class="options">
+        ${item.opts.map((opt, j) => `
+          <label><input type="radio" name="ch-${i}" value="${j}"> ${opt}</label>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+// === ПРОВЕРКА ===
+function checkFill() {
+  let score = 0;
+  fillData.forEach((item, i) => {
+    const q = document.getElementById(`fill-q-${i}`);
+    const sel = document.querySelector(`input[name="fill-${i}"]:checked`);
+    q.classList.remove('correct', 'wrong');
+    if (sel && parseInt(sel.value) === item.correct) {
+      q.classList.add('correct');
+      score++;
+    } else {
+      q.classList.add('wrong');
+    }
+  });
+  showResult('fill-result', score, fillData.length);
+}
+
+function checkMatch() {
+  let score = 0;
+  matchData.forEach((item, i) => {
+    const q = document.getElementById(`match-q-${i}`);
+    const sel = q.querySelector('select');
+    const correctIdx = matchData.findIndex(m => m.formula === item.formula);
+    const selectedText = sel.options[sel.selectedIndex].text;
+    q.classList.remove('correct', 'wrong');
+    if (selectedText === item.rule) {
+      q.classList.add('correct');
+      score++;
+    } else {
+      q.classList.add('wrong');
+    }
+  });
+  showResult('match-result', score, matchData.length);
+}
+
+function checkTranslate() {
+  let score = 0;
+  translateData.forEach((item, i) => {
+    const q = document.getElementById(`tr-q-${i}`);
+    const sel = document.querySelector(`input[name="tr-${i}"]:checked`);
+    q.classList.remove('correct', 'wrong');
+    if (sel && parseInt(sel.value) === item.correct) {
+      q.classList.add('correct');
+      score++;
+    } else {
+      q.classList.add('wrong');
+    }
+  });
+  showResult('translate-result', score, translateData.length);
+}
+
+function checkChoose() {
+  let score = 0;
+  chooseData.forEach((item, i) => {
+    const q = document.getElementById(`ch-q-${i}`);
+    const sel = document.querySelector(`input[name="ch-${i}"]:checked`);
+    q.classList.remove('correct', 'wrong');
+    if (sel && parseInt(sel.value) === item.correct) {
+      q.classList.add('correct');
+      score++;
+    } else {
+      q.classList.add('wrong');
+    }
+  });
+  showResult('choose-result', score, chooseData.length);
+}
+
+function showResult(id, score, total) {
+  const el = document.getElementById(id);
+  let msg = '';
+  const percent = (score / total) * 100;
+  if (percent === 100) msg = '🏆 Отлично! / Excellent!';
+  else if (percent >= 70) msg = '👍 Хорошо! / Good job!';
+  else if (percent >= 50) msg = '📚 Неплохо, но повтори теорию. / Not bad, review the theory.';
+  else msg = '💪 Повтори правила и попробуй снова! / Review the rules and try again!';
+  el.innerHTML = `Результат / Result: <b>${score} / ${total}</b><br>${msg}`;
+  el.classList.add('show');
+  el.scrollIntoView({behavior: 'smooth', block: 'center'});
+}
+
+// === ИНИЦИАЛИЗАЦИЯ ===
+renderFill();
+renderMatch();
+renderTranslate();
+renderChoose();
+</script>
+</body>
+</html>
